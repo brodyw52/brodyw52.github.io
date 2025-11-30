@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>hi, i'm brody</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --yellow: #fff59d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                   "Segoe UI", system-ui, sans-serif;
+      background: #fafafa;
+      color: #111;
+      max-width: 720px;
+      margin: 48px auto;
+      padding: 0 16px 64px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      margin: 0 0 4px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      margin: 0 0 32px;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    .highlight {
+      background: var(--yellow);
+      padding: 0 2px;
+    }
+
+    .section-title {
+      margin-top: 32px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-transform: lowercase;
+      letter-spacing: 0.04em;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    ul {
+      margin: 0 0 16px;
+      padding-left: 18px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    small {
+      font-size: 0.8rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>hi, i'm brody.</h1>
+  <p class="subtitle">20, atlanta / cleveland. emory university (class of 2027).</p>
+
+  <p>
+    <span class="highlight">
+      i build and test fast-moving systems at the intersection of ai, growth, and data.
+    </span>
+    right now, i'm exploring early-stage distribution, agentic workflows, and how college founders can move
+    with startup-level velocity before they have a company.
+  </p>
+
+  <p>
+    connect with me on:
+    <a href="https://github.com/brodyw52" target="_blank">github</a>,
+    <a href="https://www.linkedin.com/in/brody-weinfurtner/" target="_blank">linkedin</a>,
+    <a href="mailto:brody.weinfurtner@emory.edu">email</a>.
+  </p>
+
+  <div class="section-title">recent stuff</div>
+  <ul>
+    <li>2025 — building growth systems for <strong>Personally</strong>.</li>
+    <li>2025 — interned at <strong>North Coast Ventures</strong>, focused on founder-facing diligence + outbound experiments.</li>
+    <li>2024 — built early concepts for <strong>Wakeify</strong> and <strong>TalkinBall</strong>.</li>
+  </ul>
+
+  <div class="section-title">some values</div>
+  <ul>
+    <li>ship small, ship fast.</li>
+    <li>bias toward reality.</li>
+    <li>seek problems, not ideas.</li>
+    <li>velocity beats perfection.</li>
+  </ul>
+
+  <p><small>wanna chat? just reach out.</small></p>
+
+</body>
+</html>
+ 
