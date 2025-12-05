@@ -40,8 +40,6 @@
       text-underline-offset: 3px;
     }
 
-    /* --------- layout shell --------- */
-
     .site {
       min-height: 100vh;
       display: flex;
@@ -61,7 +59,7 @@
       }
     }
 
-    /* --------- top nav --------- */
+    /* nav */
 
     .nav {
       display: flex;
@@ -102,7 +100,7 @@
       width: 100%;
     }
 
-    /* --------- hero --------- */
+    /* hero */
 
     .hero {
       display: grid;
@@ -163,8 +161,6 @@
       text-underline-offset: 3px;
     }
 
-    /* photo card */
-
     .hero-photo-card {
       background: var(--card);
       border-radius: 28px;
@@ -191,9 +187,6 @@
       color: var(--muted);
     }
 
-    /* later, replace the div above with:
-       <img src="your-photo.jpg" alt="Brody Weinfurtner" class="hero-photo-img">
-    */
     .hero-photo-img {
       width: 100%;
       border-radius: 22px;
@@ -201,7 +194,7 @@
       object-fit: cover;
     }
 
-    /* --------- sections --------- */
+    /* generic section */
 
     .section {
       margin-top: 40px;
@@ -263,6 +256,126 @@
       left: 0;
       color: var(--muted);
     }
+
+    /* timeline */
+
+    .timeline {
+      margin-top: 40px;
+      padding: 32px 0 8px;
+    }
+
+    .timeline-head {
+      padding: 0 4px 18px;
+    }
+
+    .timeline-grid {
+      position: relative;
+    }
+
+    .timeline-spine {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.02));
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 28px;
+      align-items: center;
+    }
+
+    .timeline-year {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .timeline-dot-wrap {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 2px solid rgba(0,0,0,0.65);
+      box-shadow: 0 0 0 6px rgba(0,0,0,0.04);
+    }
+
+    .timeline-card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 16px 18px;
+      box-shadow:
+        0 18px 40px rgba(15, 10, 3, 0.12),
+        0 0 0 1px rgba(0,0,0,0.03);
+      font-size: 0.92rem;
+    }
+
+    .timeline-card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .timeline-card-meta {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .timeline-card p {
+      margin: 0;
+    }
+
+    .timeline-row.is-right .timeline-card-left {
+      order: 3;
+    }
+
+    .timeline-row.is-right .timeline-year {
+      text-align: right;
+    }
+
+    @media (max-width: 880px) {
+      .timeline-grid {
+        padding-left: 6px;
+      }
+
+      .timeline-spine {
+        left: 20px;
+        transform: none;
+      }
+
+      .timeline-row {
+        grid-template-columns: 32px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .timeline-row .timeline-year {
+        grid-column: 1 / -1;
+        text-align: left;
+        margin-bottom: 4px;
+      }
+
+      .timeline-row .timeline-card,
+      .timeline-row.is-right .timeline-card-left {
+        order: 0;
+      }
+    }
   </style>
 </head>
 
@@ -270,20 +383,19 @@
   <div class="site">
     <div class="shell">
 
-      <!-- top navigation -->
       <header class="nav">
         <div class="nav-left">brody weinfurtner</div>
         <nav class="nav-right">
-          <a href="#journey" class="nav-link">journey</a>
+          <a href="#timeline" class="nav-link">journey</a>
           <a href="#recent" class="nav-link">recent</a>
           <a href="#contact" class="nav-link">contact</a>
           <a href="#values" class="nav-link">values</a>
         </nav>
       </header>
 
-      <!-- hero block -->
       <main>
-        <section class="hero" id="journey">
+        <!-- hero -->
+        <section class="hero" id="home">
           <div>
             <h1 class="hero-title">brody weinfurtner</h1>
             <p class="hero-subtitle">
@@ -307,18 +419,95 @@
           </div>
 
           <div class="hero-photo-card">
-            <!-- placeholder: replace the inner div with an <img> when you have a photo -->
+            <!-- replace this div with <img src="your-photo.jpg" class="hero-photo-img" alt="Brody Weinfurtner"> -->
             <div class="hero-photo-placeholder">
               photo placeholder
             </div>
           </div>
         </section>
 
-        <!-- recent work / timeline -->
+        <!-- timeline / journey -->
+        <section class="timeline" id="timeline">
+          <div class="timeline-head">
+            <div class="section-label">journey</div>
+            <div class="section-title">a simple timeline of what i'm building</div>
+          </div>
+
+          <div class="timeline-grid">
+            <div class="timeline-spine"></div>
+
+            <!-- 2026 -->
+            <div class="timeline-row">
+              <div class="timeline-year">2026</div>
+              <div class="timeline-dot-wrap">
+                <div class="timeline-dot"></div>
+              </div>
+              <div class="timeline-card timeline-card-left">
+                <div class="timeline-card-meta">up next</div>
+                <div class="timeline-card-title">pushing toward a fundable startup</div>
+                <p>
+                  testing early products around ai-driven growth &amp; data, aiming for something worthy of top accelerators.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="timeline-row is-right">
+              <div class="timeline-year">2025</div>
+              <div class="timeline-dot-wrap">
+                <div class="timeline-dot"></div>
+              </div>
+              <div class="timeline-card timeline-card-left">
+                <div class="timeline-card-meta">applied ai &amp; growth</div>
+                <div class="timeline-card-title">invest atlanta, hackathons, and automation</div>
+                <p>
+                  ran <a href="https://github.com/brodyw52/Ai-Data-Lab" target="_blank">geospatial ml experiments</a> for
+                  invest atlanta, placed second at
+                  <a href="https://www.hackatl.org/" target="_blank">hackATL</a> with
+                  <a href="https://github.com/brodyw52/Clima-HackATL" target="_blank">C.L.I.M.A.</a>,
+                  and shipped a <a href="https://github.com/brodyw52/Automations/blob/main/reddit%20automation.json" target="_blank">reddit / facebook automation</a>
+                  that lifted presence ~50% for a startup.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="timeline-row">
+              <div class="timeline-year">2024</div>
+              <div class="timeline-dot-wrap">
+                <div class="timeline-dot"></div>
+              </div>
+              <div class="timeline-card timeline-card-left">
+                <div class="timeline-card-meta">foundations</div>
+                <div class="timeline-card-title">digging into data &amp; startup thinking</div>
+                <p>
+                  stacked coursework in stats, econ, and research methods while building small projects and running experiments on myself for focus, productivity, and learning.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2023 -->
+            <div class="timeline-row is-right">
+              <div class="timeline-year">2023</div>
+              <div class="timeline-dot-wrap">
+                <div class="timeline-dot"></div>
+              </div>
+              <div class="timeline-card timeline-card-left">
+                <div class="timeline-card-meta">day one</div>
+                <div class="timeline-card-title">arrived at emory &amp; started building</div>
+                <p>
+                  moved into emory, joined varsity soccer, and began shifting from “interested in business” to actually testing ideas in the real world.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- recent stuff with original links -->
         <section class="section" id="recent">
           <div class="section-header">
             <div class="section-label">recent stuff</div>
-            <div class="section-title">what i've been building</div>
+            <div class="section-title">what i've been building lately</div>
           </div>
 
           <ul>
@@ -342,8 +531,7 @@
             <li>
               <strong>jul 2025 —</strong> built
               <a href="https://github.com/brodyw52/Personallyai" target="_blank">personally.ai</a>
-              to automate my internship cold outreach and help me secure multiple job offers; also used
-              by 80+ beta users in their search.
+              to automate my internship cold outreach and help me secure multiple job offers. software also used to help 80+ beta users in their search.
             </li>
           </ul>
         </section>
@@ -398,3 +586,5 @@
   </div>
 </body>
 </html>
+
+
