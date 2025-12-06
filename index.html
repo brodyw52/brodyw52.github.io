@@ -14,6 +14,7 @@
       --accent: #f9e3b1;
       --card: #ffffff;
       --border-soft: rgba(0,0,0,0.04);
+      --link: #1f4fd5;
     }
 
     * {
@@ -30,13 +31,15 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* links clearly indicated */
     a {
-      color: inherit;
-      text-decoration: none;
-    }
-    a:hover {
+      color: var(--link);
       text-decoration: underline;
       text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+    a:hover {
+      text-decoration-thickness: 2px;
     }
 
     .site {
@@ -91,7 +94,7 @@
       bottom: -4px;
       width: 0;
       height: 1px;
-      background: var(--fg);
+      background: var(--link);
       transition: width 0.18s ease-out;
     }
 
@@ -155,56 +158,83 @@
       color: var(--muted);
     }
 
-    /* ---------------- PHOTO STACK ---------------- */
+    /* ---------------- IMAGE STRIP ---------------- */
 
     .hero-photo-card {
       background: var(--card);
       border-radius: 28px;
-      padding: 26px;
+      padding: 22px 24px;
       box-shadow: 0 24px 60px rgba(15,10,3,0.12), 0 0 0 1px var(--border-soft);
       display: flex;
-      align-items: center;
       justify-content: center;
-      min-height: 360px;
     }
 
-    .photo-stack {
-      position: relative;
+    .hero-photo-group {
+      display: flex;
+      gap: 18px;
       width: 100%;
-      height: 360px;
-      perspective: 1200px;
+      max-width: 540px;
+      justify-content: center;
     }
 
-    .photo-stack img {
-      position: absolute;
+    .hero-photo-thumb {
+      flex: 1;
+      aspect-ratio: 3 / 4;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(145deg, #f0ebe4, #ddd2c2);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.16);
+      transition: transform 0.22s ease-out, box-shadow 0.22s ease-out;
+    }
+
+    .hero-photo-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 22px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-      transition: transform 0.25s ease, opacity 0.25s ease;
-      cursor: pointer;
+      display: block;
     }
 
-    .photo-stack img:nth-child(1) {
-      transform: rotate(-4deg) translateY(-6px);
-      opacity: 0.92;
+    .hero-photo-thumb--left {
+      transform: rotate(-4deg) translateY(4px);
+    }
+    .hero-photo-thumb--center {
+      transform: translateY(-4px);
+    }
+    .hero-photo-thumb--right {
+      transform: rotate(5deg) translateY(4px);
     }
 
-    .photo-stack img:nth-child(2) {
-      transform: rotate(3deg) translateY(6px);
-      opacity: 0.90;
+    .hero-photo-thumb:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 26px 60px rgba(0,0,0,0.24);
     }
 
-    .photo-stack img:nth-child(3) {
-      transform: rotate(-1deg);
-      opacity: 1;
+    /* zoom/crop piano image */
+    .hero-photo-img--piano {
+      object-position: 50% 35%;
+      transform: scale(1.08);
     }
 
-    .photo-stack img:hover {
-      transform: scale(1.03) rotate(0deg);
-      z-index: 10;
-      opacity: 1;
+    @media (max-width: 880px) {
+      .hero-photo-group {
+        max-width: none;
+      }
+      .hero-photo-thumb {
+        max-width: 220px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-photo-card {
+        justify-content: flex-start;
+      }
+      .hero-photo-group {
+        gap: 12px;
+      }
+      .hero-photo-thumb {
+        max-width: 180px;
+      }
     }
 
     /* ---------------- SECTIONS ---------------- */
@@ -269,7 +299,6 @@
       left: 0;
       color: var(--muted);
     }
-
   </style>
 </head>
 
@@ -296,15 +325,15 @@
             <h1 class="hero-title">brody weinfurtner</h1>
 
             <p class="hero-subtitle">
-              21 · atlanta / cleveland · emory university ’27 · data science & business
+              21 · atlanta / cleveland · emory university ’27 · data science &amp; business
             </p>
 
             <p class="hero-tagline">
-              <mark>entrepreneur, builder, athlete, creative, musician and student with long-term goals of running a top-tier company & vc fund.</mark>
+              <mark>entrepreneur, builder, athlete, creative, musician and student with long-term goals of running a top-tier company &amp; vc fund.</mark>
             </p>
 
             <p class="hero-body">
-              right now, i'm studying data, ml & ai @ emory with a specific interest in how new technology can be creatively applied to build less random and repeatable growth models for startups.
+              right now, i'm studying data, ml &amp; ai @ emory with a specific interest in how new technology can be creatively applied to build less random and repeatable growth models for startups.
             </p>
 
             <div class="hero-links">
@@ -314,12 +343,26 @@
             </div>
           </div>
 
-          <!-- PHOTO STACK -->
+          <!-- IMAGE STRIP -->
           <div class="hero-photo-card">
-            <div class="photo-stack">
-              <img src="images/investing.png" alt="Brody at investing desk">
-              <img src="images/piano.jpg" alt="Brody playing piano outdoors">
-              <img src="images/soccer.jpg" alt="Brody playing soccer at Emory">
+            <div class="hero-photo-group">
+              <figure class="hero-photo-thumb hero-photo-thumb--left">
+                <img src="images/investing.png"
+                     alt="Brody with teammates at an investing desk"
+                     class="hero-photo-img">
+              </figure>
+
+              <figure class="hero-photo-thumb hero-photo-thumb--center">
+                <img src="images/piano.jpg"
+                     alt="Brody playing keyboard outdoors"
+                     class="hero-photo-img hero-photo-img--piano">
+              </figure>
+
+              <figure class="hero-photo-thumb hero-photo-thumb--right">
+                <img src="images/soccer.jpg"
+                     alt="Brody celebrating with Emory Oxford soccer teammates"
+                     class="hero-photo-img">
+              </figure>
             </div>
           </div>
 
