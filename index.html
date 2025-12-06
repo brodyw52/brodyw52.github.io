@@ -40,7 +40,7 @@
       text-underline-offset: 3px;
     }
 
-    /* --------- layout shell --------- */
+    /* layout shell */
 
     .site {
       min-height: 100vh;
@@ -61,7 +61,7 @@
       }
     }
 
-    /* --------- top nav --------- */
+    /* top nav */
 
     .nav {
       display: flex;
@@ -102,7 +102,7 @@
       width: 100%;
     }
 
-    /* --------- hero --------- */
+    /* hero */
 
     .hero {
       display: grid;
@@ -198,7 +198,7 @@
       object-fit: cover;
     }
 
-    /* --------- sections --------- */
+    /* sections */
 
     .section {
       margin-top: 40px;
@@ -234,6 +234,7 @@
     .section ul {
       list-style: none;
       margin-top: 10px;
+      padding: 0;
     }
 
     .section li {
@@ -261,160 +262,54 @@
       color: var(--muted);
     }
 
-    /* --------- timeline --------- */
+    /* subtle interaction for recent stuff */
 
-    .timeline {
-      margin-top: 24px;
-      padding: 32px 0 8px;
+    .recent-list {
+      margin-top: 14px;
     }
 
-    .timeline-head {
-      padding: 0 4px 18px;
-    }
-
-    .timeline-grid {
+    .recent-item {
       position: relative;
+      padding: 10px 14px;
+      border-radius: 14px;
+      transition:
+        background 0.18s ease-out,
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out;
     }
 
-    .timeline-spine {
+    .recent-item::before {
+      content: "";
       position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      transform: translateX(-50%);
-      background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.02));
-    }
-
-    .timeline-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr);
-      gap: 24px;
-      margin-bottom: 28px;
-      align-items: center;
-      opacity: 0.6;
-      transition: opacity 0.18s ease-out;
-    }
-
-    .timeline-row.is-active {
-      opacity: 1;
-    }
-
-    .timeline-year {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .timeline-year span {
-      font-weight: 600;
-      color: var(--fg);
-    }
-
-    .timeline-dot-wrap {
-      position: relative;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .timeline-dot {
-      width: 12px;
-      height: 12px;
+      left: 0;
+      top: 10px;
+      bottom: 10px;
+      width: 3px;
       border-radius: 999px;
-      background: #ffffff;
-      border: 2px solid rgba(0,0,0,0.45);
-      box-shadow: 0 0 0 6px rgba(0,0,0,0.04);
-      transition: box-shadow 0.18s ease-out, border-color 0.18s ease-out, transform 0.18s ease-out;
+      background: transparent;
+      transition: background 0.18s ease-out;
     }
 
-    .timeline-row.is-active .timeline-dot {
-      border-color: #000000;
-      box-shadow: 0 0 0 6px rgba(0,0,0,0.12);
-      transform: scale(1.05);
-    }
-
-    .timeline-card {
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 16px 18px;
-      box-shadow:
-        0 18px 40px rgba(15, 10, 3, 0.12),
-        0 0 0 1px rgba(0,0,0,0.03);
-      font-size: 0.92rem;
-      cursor: pointer;
-      transform: translateY(0);
-      transition: box-shadow 0.18s ease-out, transform 0.18s ease-out, background 0.18s ease-out;
-    }
-
-    .timeline-card:hover {
-      transform: translateY(-3px);
-      box-shadow:
-        0 22px 55px rgba(15, 10, 3, 0.16),
-        0 0 0 1px rgba(0,0,0,0.04);
-    }
-
-    .timeline-row.is-active .timeline-card {
+    .recent-item:hover,
+    .recent-item:focus-within {
       background: #fffdf8;
-      transform: translateY(-3px);
-      box-shadow:
-        0 22px 55px rgba(15, 10, 3, 0.18),
-        0 0 0 1px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
     }
 
-    .timeline-card-title {
-      font-weight: 600;
-      margin-bottom: 4px;
+    .recent-item:hover::before,
+    .recent-item:focus-within::before {
+      background: #151515;
     }
 
-    .timeline-card-meta {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-      margin-bottom: 6px;
+    .recent-item a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
     }
 
-    .timeline-card p {
-      margin: 0;
-    }
-
-    .timeline-row.is-right .timeline-card-left {
-      order: 3;
-    }
-
-    .timeline-row.is-right .timeline-year {
-      text-align: right;
-    }
-
-    @media (max-width: 880px) {
-      .timeline-grid {
-        padding-left: 6px;
-      }
-
-      .timeline-spine {
-        left: 20px;
-        transform: none;
-      }
-
-      .timeline-row {
-        grid-template-columns: 32px minmax(0, 1fr);
-        gap: 16px;
-      }
-
-      .timeline-row .timeline-year {
-        grid-column: 1 / -1;
-        text-align: left;
-        margin-bottom: 4px;
-      }
-
-      .timeline-row .timeline-card,
-      .timeline-row.is-right .timeline-card-left {
-        order: 0;
-      }
+    .recent-item a:hover {
+      text-decoration-thickness: 2px;
     }
   </style>
 </head>
@@ -434,7 +329,7 @@
         </nav>
       </header>
 
-      <!-- hero block -->
+      <!-- hero -->
       <main>
         <section class="hero" id="journey">
           <div>
@@ -460,171 +355,39 @@
           </div>
 
           <div class="hero-photo-card">
-            <!-- placeholder: replace the inner div with an <img> when you have a photo -->
+            <!-- replace with <img src="your-photo.jpg" alt="Brody Weinfurtner" class="hero-photo-img"> -->
             <div class="hero-photo-placeholder">
               photo placeholder
             </div>
           </div>
         </section>
 
-        <!-- journey timeline -->
-        <section class="timeline">
-          <div class="timeline-head">
-            <div class="section-label">journey</div>
-            <div class="section-title">chronology of what i've been building</div>
-          </div>
-
-          <div class="timeline-grid">
-            <div class="timeline-spine"></div>
-
-            <!-- 2023 -->
-            <div class="timeline-row is-right" data-timeline-row>
-              <div class="timeline-year"><span>2023</span> · aug</div>
-              <div class="timeline-dot-wrap">
-                <div class="timeline-dot"></div>
-              </div>
-              <div class="timeline-card timeline-card-left" data-timeline-card>
-                <div class="timeline-card-meta">day one</div>
-                <div class="timeline-card-title">arrived at emory &amp; started building</div>
-                <p>
-                  moved into emory, joined varsity soccer, and began shifting from “interested in business”
-                  to actually testing ideas in the real world.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2024 -->
-            <div class="timeline-row" data-timeline-row>
-              <div class="timeline-year"><span>2024</span> · may</div>
-              <div class="timeline-dot-wrap">
-                <div class="timeline-dot"></div>
-              </div>
-              <div class="timeline-card timeline-card-left" data-timeline-card>
-                <div class="timeline-card-meta">foundations</div>
-                <div class="timeline-card-title">digging into data &amp; startup thinking</div>
-                <p>
-                  stacked coursework in stats, econ, and research methods while building small projects
-                  and running experiments on myself for focus, productivity, and learning.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2025 · jul -->
-            <div class="timeline-row is-right" data-timeline-row>
-              <div class="timeline-year"><span>2025</span> · jul</div>
-              <div class="timeline-dot-wrap">
-                <div class="timeline-dot"></div>
-              </div>
-              <div class="timeline-card timeline-card-left" data-timeline-card>
-                <div class="timeline-card-meta">tools for opportunity</div>
-                <div class="timeline-card-title">built personally.ai</div>
-                <p>
-                  built <a href="https://github.com/brodyw52/Personallyai" target="_blank">personally.ai</a>
-                  to automate internship cold outreach and help me secure multiple job offers;
-                  the software also supported 80+ beta users in their search.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2025 · aug -->
-            <div class="timeline-row" data-timeline-row>
-              <div class="timeline-year"><span>2025</span> · aug</div>
-              <div class="timeline-dot-wrap">
-                <div class="timeline-dot"></div>
-              </div>
-              <div class="timeline-card timeline-card-left" data-timeline-card>
-                <div class="timeline-card-meta">applied growth</div>
-                <div class="timeline-card-title">reddit / facebook automation</div>
-                <p>
-                  shipped a
-                  <a href="https://github.com/brodyw52/Automations/blob/main/reddit%20automation.json" target="_blank">
-                    reddit / facebook automation
-                  </a>
-                  that drove ~50% more presence and local geo reach for a startup.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2025 · sep -->
-            <div class="timeline-row is-right" data-timeline-row>
-              <div class="timeline-year"><span>2025</span> · sep</div>
-              <div class="timeline-dot-wrap">
-                <div class="timeline-dot"></div>
-              </div>
-              <div class="timeline-card timeline-card-left" data-timeline-card>
-                <div class="timeline-card-meta">hackathons</div>
-                <div class="timeline-card-title">hackATL · c.l.i.m.a.</div>
-                <p>
-                  won $4000 by placing second at
-                  <a href="https://www.hackatl.org/" target="_blank">hackATL</a>,
-                  building and pitching
-                  <a href="https://github.com/brodyw52/Clima-HackATL" target="_blank">C.L.I.M.A.</a>.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2025 · dec -->
-            <div class="timeline-row" data-timeline-row>
-              <div class="timeline-year"><span>2025</span> · dec</div>
-              <div class="timeline-dot-wrap">
-                <div class="timeline-dot"></div>
-              </div>
-              <div class="timeline-card timeline-card-left" data-timeline-card>
-                <div class="timeline-card-meta">applied ai &amp; growth</div>
-                <div class="timeline-card-title">invest atlanta research</div>
-                <p>
-                  presented
-                  <a href="https://github.com/brodyw52/Ai-Data-Lab" target="_blank">applied ai research</a>
-                  outcomes to invest atlanta, using geospatial ml to model event-driven transit demand and
-                  recommend smarter, cheaper surge planning.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2026 -->
-            <div class="timeline-row is-right" data-timeline-row>
-              <div class="timeline-year"><span>2026</span> · up next</div>
-              <div class="timeline-dot-wrap">
-                <div class="timeline-dot"></div>
-              </div>
-              <div class="timeline-card timeline-card-left" data-timeline-card>
-                <div class="timeline-card-meta">up next</div>
-                <div class="timeline-card-title">pushing toward a fundable startup</div>
-                <p>
-                  testing early products around ai-driven growth and data, aiming for something worthy of
-                  top accelerators.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- recent list with original links -->
+        <!-- recent stuff -->
         <section class="section" id="recent">
           <div class="section-header">
             <div class="section-label">recent stuff</div>
             <div class="section-title">what i've been building</div>
           </div>
 
-          <ul>
-            <li>
+          <ul class="recent-list">
+            <li class="recent-item">
               <strong>dec 2025 —</strong> presenting
               <a href="https://github.com/brodyw52/Ai-Data-Lab" target="_blank">applied ai research</a>
               outcomes to invest atlanta.
             </li>
-            <li>
+            <li class="recent-item">
               <strong>sep 2025 —</strong> won $4000 by placing second at
               <a href="https://www.hackatl.org/" target="_blank">hackATL</a>. built and pitched
               <a href="https://github.com/brodyw52/Clima-HackATL" target="_blank">C.L.I.M.A.</a>
             </li>
-            <li>
+            <li class="recent-item">
               <strong>aug 2025 —</strong> built a
               <a href="https://github.com/brodyw52/Automations/blob/main/reddit%20automation.json" target="_blank">
                 reddit / facebook automation
               </a>
               that drove ~50% more presence and local geo reach for a startup.
             </li>
-            <li>
+            <li class="recent-item">
               <strong>jul 2025 —</strong> built
               <a href="https://github.com/brodyw52/Personallyai" target="_blank">personally.ai</a>
               to automate my internship cold outreach and help me secure multiple job offers; also used
@@ -681,31 +444,5 @@
 
     </div>
   </div>
-
-  <script>
-    // interactive timeline
-    (function () {
-      const rows = Array.from(document.querySelectorAll("[data-timeline-row]"));
-      const cards = Array.from(document.querySelectorAll("[data-timeline-card]"));
-
-      function activateRow(row) {
-        rows.forEach(r => r.classList.remove("is-active"));
-        row.classList.add("is-active");
-      }
-
-      cards.forEach(card => {
-        card.addEventListener("click", () => {
-          const row = card.closest("[data-timeline-row]");
-          if (!row) return;
-          activateRow(row);
-          row.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
-      });
-
-      if (rows.length > 0) {
-        rows[0].classList.add("is-active");
-      }
-    })();
-  </script>
 </body>
 </html>
