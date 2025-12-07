@@ -31,7 +31,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* base links (nav etc.) */
     a {
       color: var(--link);
       text-decoration: underline;
@@ -42,7 +41,6 @@
       text-decoration-thickness: 2px;
     }
 
-    /* pastel inline links */
     .soft-link {
       color: inherit;
       text-decoration: none;
@@ -86,8 +84,6 @@
       }
     }
 
-    /* NAV */
-
     .nav {
       display: flex;
       align-items: center;
@@ -126,8 +122,6 @@
     .nav-link:hover::after {
       width: 100%;
     }
-
-    /* HERO */
 
     .hero {
       display: grid;
@@ -182,8 +176,6 @@
       font-size: 0.9rem;
       color: var(--muted);
     }
-
-    /* HERO PHOTO (simplified slideshow) */
 
     .hero-photo-card {
       background: radial-gradient(circle at top left, #ffffff 0, #fdf7ee 45%, #f1e4d6 100%);
@@ -242,8 +234,6 @@
       width: 14px;
       transform: translateY(-1px);
     }
-
-    /* GENERIC SECTIONS */
 
     .section {
       margin-top: 40px;
@@ -312,7 +302,6 @@
   <div class="site">
     <div class="shell">
 
-      <!-- NAV -->
       <header class="nav">
         <div class="nav-left">brody weinfurtner</div>
         <nav class="nav-right">
@@ -323,10 +312,8 @@
         </nav>
       </header>
 
-      <!-- HERO -->
       <main>
         <section class="hero" id="journey">
-
           <div>
             <h1 class="hero-title">brody weinfurtner</h1>
 
@@ -349,26 +336,22 @@
             </div>
           </div>
 
-          <!-- HERO PHOTO SLIDESHOW -->
           <div class="hero-photo-card">
             <div class="hero-photo-frame">
-              <!-- IMPORTANT: this file name must match your repo root exactly -->
+              <!-- make sure this file exists at /images/investing.jpg -->
               <img
-                src="image 1.PNG"
+                src="images/investing.jpg"
                 alt="Brody photo"
                 class="hero-photo-img"
                 id="hero-photo-img"
               >
             </div>
 
-            <div class="hero-photo-dots" id="hero-photo-dots">
-              <!-- dots injected by JS -->
-            </div>
+            <div class="hero-photo-dots" id="hero-photo-dots"></div>
           </div>
 
         </section>
 
-        <!-- RECENT -->
         <section class="section" id="recent">
           <div class="section-header">
             <div class="section-label">recent stuff</div>
@@ -401,7 +384,6 @@
           </ul>
         </section>
 
-        <!-- CONTACT -->
         <section class="section" id="contact">
           <div class="section-header">
             <div class="section-label">contact</div>
@@ -425,7 +407,6 @@
           </ul>
         </section>
 
-        <!-- VALUES -->
         <section class="section" id="values">
           <div class="section-header">
             <div class="section-label">values</div>
@@ -451,24 +432,23 @@
     </div>
   </div>
 
-  <!-- TIMED SLIDESHOW -->
   <script>
-    // CHANGE THESE PATHS ONLY IF YOUR FILENAMES / FOLDERS ARE DIFFERENT.
+    // images must exist with these exact paths and names (case-sensitive on GitHub)
     var slides = [
       {
-        src: 'image 1.PNG',     // investing desk
+        src: 'images/investing.jpg',
         alt: 'Brody with teammates at an investing desk setup',
         scale: 1.12,
         position: '50% 40%'
       },
       {
-        src: 'image 2.jpg',     // piano
+        src: 'images/piano.jpg',
         alt: 'Brody playing keyboard outdoors',
         scale: 1.18,
         position: '50% 35%'
       },
       {
-        src: 'image 3.JPEG',    // soccer
+        src: 'images/soccer.jpg',
         alt: 'Brody celebrating with Emory Oxford soccer teammates',
         scale: 1.35,
         position: '50% 42%'
@@ -479,8 +459,8 @@
     var dotsContainer = document.getElementById('hero-photo-dots');
 
     var current = 0;
-
     var dots = [];
+
     for (var i = 0; i < slides.length; i++) {
       var d = document.createElement('div');
       d.className = 'hero-photo-dot' + (i === 0 ? ' is-active' : '');
