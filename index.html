@@ -183,7 +183,7 @@
       color: var(--muted);
     }
 
-    /* HERO PHOTO SLIDESHOW */
+    /* HERO PHOTO (simplified slideshow) */
 
     .hero-photo-card {
       background: radial-gradient(circle at top left, #ffffff 0, #fdf7ee 45%, #f1e4d6 100%);
@@ -209,6 +209,7 @@
       overflow: hidden;
       position: relative;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.26);
+      background: #e6d9c9;
     }
 
     .hero-photo-img {
@@ -216,13 +217,8 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      opacity: 0;
-      transition: opacity 0.6s ease, transform 0.6s ease, object-position 0.6s ease;
       transform-origin: center;
-    }
-
-    .hero-photo-img.is-visible {
-      opacity: 1;
+      transition: transform 0.6s ease, object-position 0.6s ease;
     }
 
     .hero-photo-dots {
@@ -357,7 +353,7 @@
           <div class="hero-photo-card">
             <div class="hero-photo-frame">
               <img
-                src=""
+                src="image 1.PNG"
                 alt="brody photo"
                 class="hero-photo-img"
                 id="hero-photo-img"
@@ -454,10 +450,10 @@
     </div>
   </div>
 
-  <!-- TIMED SLIDESHOW -->
+  <!-- TIMED SLIDESHOW (no opacity tricks) -->
   <script>
     // filenames must match exactly what’s in your repo root
-    const slides = [
+    var slides = [
       {
         src: 'image 1.PNG',     // investing
         alt: 'Brody with teammates at an investing desk setup',
@@ -478,35 +474,37 @@
       }
     ];
 
-    const imgEl = document.getElementById('hero-photo-img');
-    const dotsContainer = document.getElementById('hero-photo-dots');
+    var imgEl = document.getElementById('hero-photo-img');
+    var dotsContainer = document.getElementById('hero-photo-dots');
 
-    let current = 0;
+    var current = 0;
 
-    const dots = slides.map((_, i) => {
-      const d = document.createElement('div');
+    var dots = [];
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('div');
       d.className = 'hero-photo-dot' + (i === 0 ? ' is-active' : '');
       dotsContainer.appendChild(d);
-      return d;
-    });
-
-    function showSlide(index, immediate = false) {
-      const slide = slides[index];
-
-      if (!immediate) imgEl.classList.remove('is-visible');
-
-      setTimeout(() => {
-        imgEl.src = slide.src;
-        imgEl.alt = slide.alt;
-        imgEl.style.transform = 'scale(' + (slide.scale || 1) + ')';
-        imgEl.style.objectPosition = slide.position || '50% 50%';
-
-        dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
-        imgEl.classList.add('is-visible');
-      }, immediate ? 0 : 150);
+      dots.push(d);
     }
 
-    showSlide(current, true);
+    function showSlide(index) {
+      var slide = slides[index];
+
+      imgEl.src = slide.src;
+      imgEl.alt = slide.alt;
+      imgEl.style.transform = 'scale(' + (slide.scale || 1) + ')';
+      imgEl.style.objectPosition = slide.position || '50% 50%';
+
+      for (var j = 0; j < dots.length; j++) {
+        if (j === index) {
+          dots[j].classList.add('is-active');
+        } else {
+          dots[j].classList.remove('is-active');
+        }
+      }
+    }
+
+    showSlide(current);
 
     setInterval(function () {
       current = (current + 1) % slides.length;
