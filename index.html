@@ -4,172 +4,53 @@
   <meta charset="utf-8" />
   <title>brody weinfurtner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <style>
-    :root{
-      --bg:#f5f1ea;
-      --fg:#151515;
-      --muted:#6b6b6b;
-      --link:#1f4fd5;
-
-      /* your highlight effect */
-      --hl-a: rgba(231,214,255,.9);
-      --hl-b: rgba(255,233,210,.9);
-
-      --rule: rgba(0,0,0,.08);
-    }
-
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html,body{ height:100%; }
-
-    body{
-      background: radial-gradient(circle at top left, #ffffff 0, var(--bg) 55%, #efe7dd 100%);
-      color: var(--fg);
-      -webkit-font-smoothing: antialiased;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      line-height: 1.7;
-    }
-
-    a{
-      color: var(--link);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-    }
-    a:hover{ text-decoration-thickness: 2px; }
-
-    /* KEEP: your highlight effect */
-    .soft-link{
-      color: inherit;
-      text-decoration: none;
-      background-image: linear-gradient(120deg, var(--hl-a), var(--hl-b));
-      background-size: 100% 45%;
-      background-position: 0 100%;
-      background-repeat: no-repeat;
-      border-radius: 4px;
-      padding: 0 2px;
-      transition: background-size .16s, box-shadow .16s, transform .16s;
-    }
-    .soft-link:hover{
-      background-size: 100% 80%;
-      box-shadow: 0 3px 14px rgba(0,0,0,.12);
-      transform: translateY(-1px);
-    }
-
-    .wrap{
-      min-height: 100%;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding: 80px 20px 120px;
-    }
-
-    .col{
-      width: min(760px, 100%);
-      text-align: left;
-    }
-
-    .topline{
-      display:flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 14px;
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 34px;
-    }
-
-    .topline a{ color: var(--muted); }
-    .topline a.soft-link{ color: inherit; }
-
-    .title{
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 18px;
-    }
-
-    .p{ margin: 10px 0; color: var(--fg); font-size: 14px; }
-    .muted{ color: var(--muted); }
-
-    .rule{
-      height:1px;
-      background: var(--rule);
-      margin: 26px 0;
-    }
-
-    .links{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px 14px;
-      margin-top: 16px;
-      font-size: 13px;
-    }
-
-    .bracket a{
-      text-decoration:none;
-    }
-    .bracket a::before{ content:"["; color: var(--muted); }
-    .bracket a::after{ content:"]"; color: var(--muted); }
-
-    /* pages */
-    .page-title{
-      font-size: 14px;
-      font-weight: 600;
-      margin: 22px 0 10px;
-    }
-    ul{
-      margin: 10px 0 0 18px;
-      color: var(--fg);
-      font-size: 13px;
-    }
-    li{ margin: 8px 0; }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body>
+<body data-page="index">
   <div class="wrap">
     <main class="col">
-
-      <div class="topline">
+      <div class="topline" data-reveal>
         <div>brody weinfurtner</div>
-        <div class="bracket" aria-label="site pages">
-          <a class="soft-link" href="/journey.html">journey</a>
-          <a class="soft-link" href="/recent.html">recent</a>
-          <a class="soft-link" href="/contact.html">contact</a>
-          <a class="soft-link" href="/values.html">values</a>
+        <div class="nav bracket">
+          <a class="soft-link" href="journey.html">journey</a>
+          <a class="soft-link" href="recent.html">recent</a>
+          <a class="soft-link" href="contact.html">contact</a>
+          <a class="soft-link" href="values.html">values</a>
         </div>
       </div>
 
-      <div class="title">Hey, i’m Brody</div>
+      <div class="title" data-reveal>Hey, i’m Brody</div>
 
-      <p class="p">
+      <p class="p" data-reveal>
         21 · atlanta / cleveland · emory university ’27 · data science & business
       </p>
 
-      <p class="p">
-        <a class="soft-link" href="/journey.html">entrepreneur, builder, athlete, creative, musician</a> — focused on using data + AI to build less random, repeatable growth systems.
+      <p class="p" data-reveal>
+        <span class="soft-link">entrepreneur, builder, athlete, creative, musician</span> — focused on using data + AI to build less random, repeatable growth systems.
       </p>
 
-      <p class="p muted">
+      <p class="p muted" data-reveal>
         recent: applied AI research (Invest Atlanta), diligence work (North Coast Ventures), hackATL (C.L.I.M.A.), and outbound automation (personally.ai).
       </p>
 
-      <div class="links bracket" style="margin-top:18px;">
+      <div class="nav bracket" style="margin-top:18px;" data-reveal>
         <a class="soft-link" href="https://github.com/brodyw52" target="_blank" rel="noreferrer">GitHub</a>
         <a class="soft-link" href="https://www.linkedin.com/in/brody-weinfurtner/" target="_blank" rel="noreferrer">LinkedIn</a>
         <a class="soft-link" href="https://calendar.app.google/NqCDcPiRZ2DYauXH8" target="_blank" rel="noreferrer">Calendar</a>
       </div>
 
-      <div class="rule"></div>
+      <div class="rule" data-reveal></div>
 
-      <p class="p">
+      <p class="p" data-reveal>
         If you want specifics:
-        <a class="soft-link" href="/recent.html">what i’ve been building</a>
+        <a class="soft-link" href="recent.html">what i’ve been building</a>
         and
-        <a class="soft-link" href="/values.html">what i believe</a>.
+        <a class="soft-link" href="values.html">what i believe</a>.
       </p>
-
     </main>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
