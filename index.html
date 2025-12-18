@@ -1,50 +1,48 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>brody weinfurtner</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
-    :root {
-      --bg: #f5f1ea;
-      --bg-soft: #faf7f2;
-      --fg: #151515;
-      --muted: #707070;
-      --accent: #f9e3b1;
-      --card: #ffffff;
-      --border-soft: rgba(0,0,0,0.04);
-      --link: #1f4fd5;
+    :root{
+      --bg:#f5f1ea;
+      --fg:#151515;
+      --muted:#6b6b6b;
+      --link:#1f4fd5;
+
+      /* your highlight effect */
+      --hl-a: rgba(231,214,255,.9);
+      --hl-b: rgba(255,233,210,.9);
+
+      --rule: rgba(0,0,0,.08);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+    body{
       background: radial-gradient(circle at top left, #ffffff 0, var(--bg) 55%, #efe7dd 100%);
       color: var(--fg);
-      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      line-height: 1.7;
     }
 
-    a {
+    a{
       color: var(--link);
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
-    a:hover {
-      text-decoration-thickness: 2px;
-    }
+    a:hover{ text-decoration-thickness: 2px; }
 
-    .soft-link {
+    /* KEEP: your highlight effect */
+    .soft-link{
       color: inherit;
       text-decoration: none;
-      background-image: linear-gradient(120deg, rgba(231,214,255,.9), rgba(255,233,210,.9));
+      background-image: linear-gradient(120deg, var(--hl-a), var(--hl-b));
       background-size: 100% 45%;
       background-position: 0 100%;
       background-repeat: no-repeat;
@@ -52,286 +50,126 @@
       padding: 0 2px;
       transition: background-size .16s, box-shadow .16s, transform .16s;
     }
-
-    .soft-link:hover {
+    .soft-link:hover{
       background-size: 100% 80%;
       box-shadow: 0 3px 14px rgba(0,0,0,.12);
       transform: translateY(-1px);
     }
 
-    .site {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    .wrap{
+      min-height: 100%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding: 80px 20px 120px;
     }
 
-    .shell {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 28px 32px 80px;
+    .col{
+      width: min(760px, 100%);
+      text-align: left;
     }
 
-    .nav {
-      display: flex;
+    .topline{
+      display:flex;
       justify-content: space-between;
-      font-size: .9rem;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0,1.2fr) minmax(320px,1fr);
-      gap: 56px;
-      align-items: center;
-      padding: 32px 0 40px;
-    }
-
-    @media(max-width:880px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .hero-title {
-      font-size: clamp(2.4rem,3vw,3rem);
-      font-weight: 600;
-      margin-bottom: 6px;
-      text-transform: lowercase;
-    }
-
-    .hero-subtitle {
-      font-size: .98rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-
-    .hero-tagline {
-      font-size: 1.02rem;
-      margin-bottom: 12px;
-    }
-
-    .hero-tagline mark {
-      background: var(--accent);
-      padding: 0 3px;
-    }
-
-    .hero-links {
-      display: flex;
+      align-items: baseline;
       gap: 14px;
-      margin-top: 24px;
-      font-size: .9rem;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 34px;
     }
 
-    .hero-photo-card {
-      background: radial-gradient(circle at top left, #ffffff 0, #fdf7ee 45%, #f1e4d6 100%);
-      border-radius: 30px;
-      padding: 28px 30px;
-      box-shadow:
-        0 26px 70px rgba(15,10,3,.18),
-        0 0 0 1px rgba(255,255,255,.7),
-        0 0 0 1px var(--border-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 380px;
-      position: relative;
-      overflow: hidden;
+    .topline a{ color: var(--muted); }
+    .topline a.soft-link{ color: inherit; }
+
+    .title{
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 18px;
     }
 
-    .hero-photo-frame {
-      width: 100%;
-      max-width: 520px;
-      aspect-ratio: 4/3;
-      border-radius: 24px;
-      overflow: hidden;
-      background: #e6d9c9;
-      box-shadow: 0 20px 50px rgba(0,0,0,.26);
+    .p{ margin: 10px 0; color: var(--fg); font-size: 14px; }
+    .muted{ color: var(--muted); }
+
+    .rule{
+      height:1px;
+      background: var(--rule);
+      margin: 26px 0;
     }
 
-    .hero-photo-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform .6s, object-position .6s;
+    .links{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 16px;
+      font-size: 13px;
     }
 
-    .hero-photo-dots {
-      position: absolute;
-      bottom: 18px;
-      right: 30px;
-      display: flex;
-      gap: 6px;
+    .bracket a{
+      text-decoration:none;
     }
+    .bracket a::before{ content:"["; color: var(--muted); }
+    .bracket a::after{ content:"]"; color: var(--muted); }
 
-    .hero-photo-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(0,0,0,.18);
-      transition: background .2s, transform .2s, width .2s;
+    /* pages */
+    .page-title{
+      font-size: 14px;
+      font-weight: 600;
+      margin: 22px 0 10px;
     }
-
-    .hero-photo-dot.is-active {
-      background: rgba(0,0,0,.6);
-      width: 14px;
-      transform: translateY(-1px);
+    ul{
+      margin: 10px 0 0 18px;
+      color: var(--fg);
+      font-size: 13px;
     }
-
-    .section {
-      margin-top: 40px;
-      padding: 32px 26px;
-      border-radius: 24px;
-      background: var(--bg-soft);
-      border: 1px solid var(--border-soft);
-    }
-
-    .muted { color: var(--muted); }
+    li{ margin: 8px 0; }
   </style>
 </head>
 
 <body>
-<div class="site">
-  <div class="shell">
+  <div class="wrap">
+    <main class="col">
 
-    <header class="nav">
-      <div>brody weinfurtner</div>
-      <nav class="nav-right">
-        <a href="#journey" class="nav-link">journey</a>
-        <a href="#recent" class="nav-link">recent</a>
-        <a href="#contact" class="nav-link">contact</a>
-        <a href="#values" class="nav-link">values</a>
-      </nav>
-    </header>
-
-    <main>
-
-      <section class="hero" id="journey">
-
-        <div>
-          <h1 class="hero-title">brody weinfurtner</h1>
-
-          <p class="hero-subtitle">21 · atlanta / cleveland · emory university ’27 · data science & business</p>
-
-          <p class="hero-tagline">
-            <mark>entrepreneur, builder, athlete, creative, musician and student with long-term goals of creating something new that makes a meaningful difference on the world.</mark>
-          </p>
-
-          <p class="hero-body">
-            right now, i'm studying data, ml & ai @ emory with a specific interest in how new technology can be creatively applied to build less random and repeatable growth models for startups.
-          </p>
-
-          <div class="hero-links">
-            <a href="https://www.linkedin.com/in/brody-weinfurtner/" target="_blank" class="soft-link">linkedin</a>
-            <a href="https://github.com/brodyw52" target="_blank" class="soft-link">github</a>
-            <a href="https://calendar.app.google/NqCDcPiRZ2DYauXH8" target="_blank" class="soft-link">grab 15 minutes</a>
-          </div>
+      <div class="topline">
+        <div>brody weinfurtner</div>
+        <div class="bracket" aria-label="site pages">
+          <a class="soft-link" href="/journey.html">journey</a>
+          <a class="soft-link" href="/recent.html">recent</a>
+          <a class="soft-link" href="/contact.html">contact</a>
+          <a class="soft-link" href="/values.html">values</a>
         </div>
+      </div>
 
-        <!-- IMAGE CARD -->
-        <div class="hero-photo-card">
-          <div class="hero-photo-frame">
-            <img src="images/investing.png" id="hero-photo-img" class="hero-photo-img">
-          </div>
-          <div class="hero-photo-dots" id="hero-photo-dots"></div>
-        </div>
+      <div class="title">Hey, i’m Brody</div>
 
-      </section>
+      <p class="p">
+        21 · atlanta / cleveland · emory university ’27 · data science & business
+      </p>
 
-      <section class="section" id="recent">
-        <div class="section-title"><strong>what i've been building</strong></div>
+      <p class="p">
+        <a class="soft-link" href="/journey.html">entrepreneur, builder, athlete, creative, musician</a> — focused on using data + AI to build less random, repeatable growth systems.
+      </p>
 
-        <ul>
-          <li><strong>dec 2025 —</strong> presenting <a href="https://github.com/brodyw52/Ai-Data-Lab" class="soft-link">applied ai research</a> outcomes to invest atlanta in downtown atl.</li>
-          <li><strong>dec 2025 —</strong> completed company diligence on my 50th company for <a href="hhttps://northcoast.vc/" class="soft-link">north coast ventures</a> informing $2m+ in deployed capital.</li>
-          <li><strong>sep 2025 —</strong> won $4000 at <a href="https://www.hackatl.org/" class="soft-link">hackATL</a>, built <a href="https://github.com/brodyw52/Clima-HackATL" class="soft-link">C.L.I.M.A.</a>, a SaaS that uses 2 NASA patents to help farmers plan for environmental conditions.</li>
-          <li><strong>aug 2025 —</strong> built a <a href="https://github.com/brodyw52/Automations/blob/main/reddit%20automation.json" class="soft-link">reddit / facebook automation</a> that led to a 50% increase in engagement and increased GEO for a local startup.</li>
-          <li><strong>jul 2025 —</strong> built <a href="https://github.com/brodyw52/Personallyai" class="soft-link">personally.ai</a>to automate cold outreach for my job search. also helped 80+ beta users break into competitive jobs.</li> 
-        </ul>
-      </section>
+      <p class="p muted">
+        recent: applied AI research (Invest Atlanta), diligence work (North Coast Ventures), hackATL (C.L.I.M.A.), and outbound automation (personally.ai).
+      </p>
 
+      <div class="links bracket" style="margin-top:18px;">
+        <a class="soft-link" href="https://github.com/brodyw52" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="soft-link" href="https://www.linkedin.com/in/brody-weinfurtner/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a class="soft-link" href="https://calendar.app.google/NqCDcPiRZ2DYauXH8" target="_blank" rel="noreferrer">Calendar</a>
+      </div>
 
-      <section class="section" id="contact">
-        <div class="section-label"><strong>contact</strong></div>
-        <ul>
-          <li><span class="muted">linkedin:</span> <a class="soft-link" href="https://www.linkedin.com/in/brody-weinfurtner/">brody-weinfurtner</a></li>
-          <li><span class="muted">email:</span> <a class="soft-link" href="mailto:brodyweinfurtner@gmail.com">brodyweinfurtner@gmail.com</a> · <a class="soft-link" href="mailto:brody.weinfurtner@emory.edu">brody.weinfurtner@emory.edu</a></li>
-          <li><span class="muted">calendar:</span> <a class="soft-link" href="https://calendar.app.google/NqCDcPiRZ2DYauXH8">grab 15 minutes</a></li>
-        </ul>
-      </section>
+      <div class="rule"></div>
 
-
-      <section class="section" id="values">
-        <div class="section-title"><strong>some things i believe</strong></div>
-        <ul class="values-list">
-          <li>numbers over vibes.</li>
-          <li>your worth is determined by what you give.</li>
-          <li>be reliable, disciplined, deliver results.</li>
-          <li>the future is here, unevenly distributed.</li>
-          <li>"no entrepreneur is afraid of ai taking their job."</li>
-          <li>work long enough on specific tasks that failure becomes statistically unlikely.</li>
-        </ul>
-      </section>
+      <p class="p">
+        If you want specifics:
+        <a class="soft-link" href="/recent.html">what i’ve been building</a>
+        and
+        <a class="soft-link" href="/values.html">what i believe</a>.
+      </p>
 
     </main>
-
   </div>
-</div>
-
-<script>
-  var slides = [
-    {
-      src: 'images/investing.png',
-      scale: 1.12,
-      position: '50% 40%'
-    },
-    {
-      src: 'images/piano.jpg',
-      scale: 1.12,
-      position: '50% 35%'
-    },
-    {
-      src: 'images/soccer.jpg',
-      scale: 1.35,
-      position: '50% 42%'
-    },
-    {
-      src: 'images/research.jpg',
-      scale: 1.12,
-      position: '50% 42%'
-    }
-  ];
-
-  var imgEl = document.getElementById('hero-photo-img');
-  var dotsContainer = document.getElementById('hero-photo-dots');
-
-  var current = 0;
-  var dots = [];
-
-  for (var i = 0; i < slides.length; i++) {
-    var dot = document.createElement('div');
-    dot.className = 'hero-photo-dot' + (i === 0 ? ' is-active' : '');
-    dotsContainer.appendChild(dot);
-    dots.push(dot);
-  }
-
-  function showSlide(i) {
-    var slide = slides[i];
-    imgEl.src = slide.src;
-    imgEl.style.transform = 'scale(' + slide.scale + ')';
-    imgEl.style.objectPosition = slide.position;
-    dots.forEach((d, idx)=> d.classList.toggle('is-active', idx===i));
-  }
-
-  showSlide(current);
-
-  setInterval(() => {
-    current = (current + 1) % slides.length;
-    showSlide(current);
-  }, 4500);
-</script>
-
 </body>
 </html>
