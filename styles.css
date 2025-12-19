@@ -276,93 +276,116 @@ li{ margin: 10px 0; }
   .jmap-world, .jmap-marker, .step{ transition: none !important; }
 }
 /* ==============================
-   JOURNEY: SNAP TIMELINE + SIDE IMAGE
+   JOURNEY: TRUE SCROLL-SNAP VIEWPORT
 ================================ */
 
+/* the snap viewport must be the scroller */
 .snap{
-  height: calc(100vh - 210px);  /* fits under your header/title */
+  height: calc(100vh - 260px);      /* adjust if needed */
   overflow-y: auto;
+  overflow-x: hidden;
+
   scroll-snap-type: y mandatory;
-  overscroll-behavior: contain;
+  scroll-padding-top: 0px;
+
   border-radius: 16px;
   border: 1px solid var(--rule);
-  background: rgba(255,255,255,.35);
+  background: rgba(255,255,255,.38);
   box-shadow: 0 18px 60px rgba(0,0,0,.06);
+
+  /* makes scroll feel crisp */
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+
+  /* IMPORTANT: allow snapping momentum */
+  -webkit-overflow-scrolling: touch;
 }
 
-/* hide scrollbar without breaking scroll */
-.snap{
-  scrollbar-width: none;
+/* show a real scrollbar (don’t hide it while debugging) */
+.snap::-webkit-scrollbar{ width: 10px; }
+.snap::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.18);
+  border-radius: 999px;
 }
-.snap::-webkit-scrollbar{
-  width: 0;
-  height: 0;
-}
+.snap::-webkit-scrollbar-track{ background: transparent; }
 
+/* each step is one screen */
 .snap-step{
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   min-height: 100%;
   display: flex;
   align-items: center;
-  padding: 56px 44px;
+
+  padding: 46px 40px;
 }
 
-/* layout: text + image */
+/* layout: text left, media right */
 .snap-grid{
   width: 100%;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1.2fr 0.8fr;   /* image right */
   gap: 28px;
   align-items: center;
 }
 
+/* keep text readable */
 .snap-text .p{
   font-size: 16px;
   line-height: 1.85;
   margin: 12px 0 0;
+  max-width: 54ch;
 }
 
+/* media slot is always same size */
 .snap-media{
   margin: 0;
+  width: 100%;
+  height: 360px;                /* SAME FOR ALL */
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,.10);
   box-shadow: 0 16px 50px rgba(0,0,0,.10);
-  background: rgba(255,255,255,.4);
+  background: rgba(0,0,0,.04);
+  position: relative;
 }
 
+/* image fill */
 .snap-media img{
   width: 100%;
-  height: 420px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* small “progress” feeling: faint divider line between snaps */
+/* placeholder for steps with no image */
+.snap-media.placeholder{
+  display: grid;
+  place-items: center;
+}
+.snap-media.placeholder::before{
+  content: "—";
+  font-size: 40px;
+  color: rgba(0,0,0,.18);
+}
+
+/* subtle separation between steps */
 .snap-step + .snap-step{
   border-top: 1px solid rgba(0,0,0,.08);
 }
 
-/* mobile: stack */
+/* mobile: still snap, but stack */
 @media (max-width: 900px){
   .snap{
-    height: auto;
-    overflow: visible;
-    scroll-snap-type: none;
-    border: none;
-    box-shadow: none;
-    background: transparent;
+    height: calc(100vh - 220px);
   }
   .snap-step{
-    min-height: auto;
-    padding: 26px 0;
-    border-top: none;
+    padding: 28px 20px;
   }
   .snap-grid{
     grid-template-columns: 1fr;
   }
-  .snap-media img{
-    height: 260px;
+  .snap-media{
+    height: 240px;
   }
 }
-
