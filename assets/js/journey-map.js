@@ -1,28 +1,29 @@
 (function () {
   const world = document.getElementById("world");
   const marker = document.getElementById("marker");
-  if (!world) return;
+  const stage = document.querySelector(".jmap-stage");
+  const steps = Array.from(document.querySelectorAll(".step"));
 
-  // Scene targets in "world" coordinates (px) + scale
-  // These are centered roughly on each zone.
+  if (!world || !marker || !stage || steps.length === 0) return;
+
+  // Scene targets in WORLD coordinates (px) + scale
   const scenes = [
-    { x: 600,  y: 500,  s: 1.05, mx: 600,  my: 500 },   // piano
-    { x: 1750, y: 480,  s: 1.10, mx: 1750, my: 480 },   // soccer
-    { x: 850,  y: 1450, s: 1.12, mx: 850,  my: 1450 },  // research/build
-    { x: 2100, y: 1450, s: 1.08, mx: 2100, my: 1450 },  // investing/today
-    { x: 1500, y: 1100, s: 0.92, mx: 1500, my: 1100 }   // zoom-out finale
+    { x: 600,  y: 520,  s: 1.05, mx: 600,  my: 520 },   // piano
+    { x: 1760, y: 500,  s: 1.10, mx: 1760, my: 500 },   // soccer
+    { x: 850,  y: 1480, s: 1.12, mx: 850,  my: 1480 },  // research/build
+    { x: 2100, y: 1480, s: 1.08, mx: 2100, my: 1480 },  // investing/today
+    { x: 1500, y: 1100, s: 0.92, mx: 1500, my: 1100 }   // finale zoom-out
   ];
 
-  const steps = Array.from(document.querySelectorAll(".step"));
-  const stage = document.querySelector(".jmap-stage");
+  // Ensure predictable coordinate system
+  world.style.left = "0px";
+  world.style.top = "0px";
+  world.style.transformOrigin = "0 0";
 
-  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
 
-  function setCamera(target, immediate=false) {
+  function setCamera(target, immediate = false) {
     const rect = stage.getBoundingClientRect();
-
-    // We keep "world" positioned from its top-left at (0,0) in its own space.
-    // Camera transform moves world so that (target.x, target.y) sits at stage center.
     const cx = rect.width / 2;
     const cy = rect.height / 2;
 
@@ -30,47 +31,63 @@
     const tx = cx - target.x * s;
     const ty = cy - target.y * s;
 
-    world.style.transition = immediate ? "none" : "transform 900ms cubic-bezier(.2,.8,.2,1)";
-    world.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+    world.style.transition = immediate ? "none" : "transform 650ms cubic-bezier(.2,.8,.2,1)";
+    world.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${s})`;
 
-    // marker follows the target point
-    marker.style.transition = immediate ? "none" : "transform 900ms cubic-bezier(.2,.8,.2,1), left 900ms cubic-bezier(.2,.8,.2,1), top 900ms cubic-bezier(.2,.8,.2,1)";
+    marker.style.transition = immediate ? "none" : "left 650ms cubic-bezier(.2,.8,.2,1), top 650ms cubic-bezier(.2,.8,.2,1)";
     marker.style.left = `${target.mx}px`;
     marker.style.top = `${target.my}px`;
   }
 
-  // Place world in normal coordinate system (top-left origin)
-  // Overwrite CSS centering so transforms are predictable
-  world.style.left = "0px";
-  world.style.top = "0px";
-  world.style.transformOrigin = "0 0";
+  function getActiveStepIndex() {
+    const viewportMid = window.innerHeight * 0.42;
+    let bestIdx = 0;
+    let bestDist = Infinity;
 
-  // Start on first scene
-  setCamera(scenes[0], true);
+    for (let i = 0; i < steps.length; i++) {
+      const r = steps[i].getBoundingClientRect();
+      const stepMid = (r.top + r.bottom) / 2;
+      const d = Math.abs(stepMid - viewportMid);
+      if (d < bestDist) {
+        bestDist = d;
+        bestIdx = i;
+      }
+    }
+    return bestIdx;
+  }
 
-  // IntersectionObserver to activate steps
-  const io = new IntersectionObserver((entries) => {
-    // pick the most visible entry
-    const visible = entries
-      .filter(e => e.isIntersecting)
-      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+  let currentIdx = -1;
+  let ticking = false;
 
-    if (!visible) return;
+  function update() {
+    ticking = false;
+    const idx = getActiveStepIndex();
+    if (idx === currentIdx) return;
 
-    const idx = parseInt(visible.target.getAttribute("data-step"), 10);
-    const scene = scenes[clamp(idx, 0, scenes.length - 1)];
-    setCamera(scene, false);
+    currentIdx = idx;
 
     steps.forEach(s => s.classList.remove("is-active"));
-    visible.target.classList.add("is-active");
-  }, { root: null, threshold: [0.25, 0.35, 0.5, 0.65] });
+    steps[idx].classList.add("is-active");
 
-  steps.forEach(s => io.observe(s));
+    const scene = scenes[clamp(idx, 0, scenes.length - 1)];
+    setCamera(scene, false);
+  }
 
-  // Re-center on resize
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  // Init
+  setCamera(scenes[0], true);
+  steps[0].classList.add("is-active");
+  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", () => {
-    const active = document.querySelector(".step.is-active");
-    const idx = active ? parseInt(active.getAttribute("data-step"), 10) : 0;
-    setCamera(scenes[clamp(idx, 0, scenes.length - 1)], true);
+    const scene = scenes[clamp(currentIdx < 0 ? 0 : currentIdx, 0, scenes.length - 1)];
+    setCamera(scene, true);
   });
+
+  // First pass
+  update();
 })();
