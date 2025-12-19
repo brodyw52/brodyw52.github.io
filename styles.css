@@ -276,116 +276,247 @@ li{ margin: 10px 0; }
   .jmap-world, .jmap-marker, .step{ transition: none !important; }
 }
 /* ==============================
-   JOURNEY: TRUE SCROLL-SNAP VIEWPORT
+   JOURNEY: HORIZONTAL TIMELINE
 ================================ */
 
-/* the snap viewport must be the scroller */
-.snap{
-  height: calc(100vh - 260px);      /* adjust if needed */
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  scroll-snap-type: y mandatory;
-  scroll-padding-top: 0px;
-
-  border-radius: 16px;
-  border: 1px solid var(--rule);
-  background: rgba(255,255,255,.38);
-  box-shadow: 0 18px 60px rgba(0,0,0,.06);
-
-  /* makes scroll feel crisp */
-  scroll-behavior: smooth;
-  overscroll-behavior: contain;
-
-  /* IMPORTANT: allow snapping momentum */
-  -webkit-overflow-scrolling: touch;
-}
-
-/* show a real scrollbar (don’t hide it while debugging) */
-.snap::-webkit-scrollbar{ width: 10px; }
-.snap::-webkit-scrollbar-thumb{
-  background: rgba(0,0,0,.18);
-  border-radius: 999px;
-}
-.snap::-webkit-scrollbar-track{ background: transparent; }
-
-/* each step is one screen */
-.snap-step{
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  min-height: 100%;
+.timeline-container {
+  position: relative;
+  margin: 40px 0;
   display: flex;
   align-items: center;
-
-  padding: 46px 40px;
+  gap: 20px;
 }
 
-/* layout: text left, media right */
-.snap-grid{
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;   /* image right */
-  gap: 28px;
-  align-items: center;
-}
-
-/* keep text readable */
-.snap-text .p{
-  font-size: 16px;
-  line-height: 1.85;
-  margin: 12px 0 0;
-  max-width: 54ch;
-}
-
-/* media slot is always same size */
-.snap-media{
-  margin: 0;
-  width: 100%;
-  height: 360px;                /* SAME FOR ALL */
-  border-radius: 16px;
+.timeline-wrapper {
+  flex: 1;
   overflow: hidden;
-  border: 1px solid rgba(0,0,0,.10);
-  box-shadow: 0 16px 50px rgba(0,0,0,.10);
-  background: rgba(0,0,0,.04);
+  border-radius: 20px;
+  background: rgba(255,255,255,.45);
+  border: 1px solid var(--rule);
+  box-shadow: 0 20px 60px rgba(0,0,0,.08);
   position: relative;
 }
 
-/* image fill */
-.snap-media img{
+.timeline-track {
+  display: flex;
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.timeline-track::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-step {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  flex: 0 0 100%;
+  min-width: 100%;
+  padding: 50px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-step-inner {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  opacity: 0.5;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.timeline-step {
+  position: relative;
+  padding-left: 80px;
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timeline-content .p {
+  font-size: 17px;
+  line-height: 1.9;
+  margin: 0;
+  max-width: 55ch;
+}
+
+.timeline-media {
+  margin: 0;
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,.12);
+  background: rgba(0,0,0,.02);
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1),
+              box-shadow 0.4s ease;
+}
+
+.timeline-step:hover .timeline-media {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 24px 70px rgba(0,0,0,.16);
+}
+
+.timeline-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* placeholder for steps with no image */
-.snap-media.placeholder{
+.timeline-media.placeholder {
   display: grid;
   place-items: center;
-}
-.snap-media.placeholder::before{
-  content: "—";
-  font-size: 40px;
-  color: rgba(0,0,0,.18);
+  background: linear-gradient(135deg, rgba(0,0,0,.02) 0%, rgba(0,0,0,.05) 100%);
 }
 
-/* subtle separation between steps */
-.snap-step + .snap-step{
-  border-top: 1px solid rgba(0,0,0,.08);
+.placeholder-content {
+  font-size: 48px;
+  color: rgba(0,0,0,.12);
+  font-weight: 300;
 }
 
-/* mobile: still snap, but stack */
+.timeline-arrow {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: rgba(255,255,255,.6);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,.06);
+}
+
+.timeline-arrow:hover {
+  background: rgba(255,255,255,.9);
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(0,0,0,.12);
+  border-color: var(--link);
+}
+
+.timeline-arrow:active {
+  transform: scale(0.95);
+}
+
+.timeline-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.timeline-arrow:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,.06);
+}
+
+.timeline-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.timeline-dot:hover {
+  transform: scale(1.3);
+  background: rgba(0,0,0,.3);
+}
+
+.timeline-dot.active {
+  background: var(--link);
+  width: 24px;
+  border-radius: 4px;
+  border-color: var(--link);
+}
+
+/* Mobile responsive */
 @media (max-width: 900px){
-  .snap{
-    height: calc(100vh - 220px);
+  .timeline-container {
+    flex-direction: column;
+    gap: 15px;
   }
-  .snap-step{
-    padding: 28px 20px;
+
+  .timeline-arrow {
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
   }
-  .snap-grid{
+
+  .timeline-arrow-left {
+    left: 10px;
+  }
+
+  .timeline-arrow-right {
+    right: 10px;
+  }
+
+  .timeline-wrapper {
+    width: 100%;
+  }
+
+  .timeline-step {
+    padding: 40px 30px;
+    padding-left: 60px;
+  }
+
+  .timeline-step-inner {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
-  .snap-media{
-    height: 240px;
+
+  .timeline-media {
+    height: 280px;
+  }
+
+  .timeline-marker {
+    top: 40px;
+    font-size: 11px;
   }
 }

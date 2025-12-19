@@ -10,108 +10,146 @@
   <link rel="stylesheet" href="./assets/css/animations.css">
 </head>
 
-<body>
+<body data-page="journey">
   <div class="wrap">
     <main class="col">
-
-     <div class="page-title" data-reveal>journey</div>
-<p class="p muted" data-reveal>scroll-snap timeline. one beat at a time.</p>
-<div class="rule"></div>
-
-<section class="snap">
-
-  <section class="snap-step">
-    <div class="snap-grid" data-reveal>
-      <div class="snap-text">
-        <div class="journey-marker">14</div>
-        <p class="p">
-          I started building at 14. During Covid, I created and sold instrumental music online, earning roughly $1,000 by learning demand, pricing and distribution the hard way.
-        </p>
+      <div class="topline" data-reveal>
+        <div>brody weinfurtner</div>
+        <div class="nav bracket">
+          <a class="soft-link" href="index.html">home</a>
+          <a class="soft-link" href="journey.html">journey</a>
+          <a class="soft-link" href="recent.html">recent</a>
+          <a class="soft-link" href="contact.html">contact</a>
+          <a class="soft-link" href="values.html">values</a>
+        </div>
       </div>
-      <figure class="snap-media">
-        <img src="./images/piano.jpg" alt="">
-      </figure>
-    </div>
-  </section>
 
-  <section class="snap-step">
-    <div class="snap-grid" data-reveal>
-      <div class="snap-text">
-        <div class="journey-marker">early</div>
-        <p class="p">
-          As a kid I also ran a small eBay operation, selling friends items and taking a 10% margin. Nothing fancy, but real transactions that developed my entrepreneurial instinct.
-        </p>
+      <div class="page-title" data-reveal>journey</div>
+      <p class="p muted" data-reveal>horizontal timeline. one beat at a time.</p>
+      <div class="rule"></div>
+
+      <div class="timeline-container">
+        <button class="timeline-arrow timeline-arrow-left" aria-label="Previous" id="timelinePrev">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        
+        <div class="timeline-wrapper" id="timelineWrapper">
+          <div class="timeline-track" id="timelineTrack">
+
+            <div class="timeline-step" data-reveal>
+              <div class="timeline-step-inner">
+                <div class="timeline-marker">14</div>
+                <div class="timeline-content">
+                  <p class="p" data-reveal>
+                    I started building at 14. During Covid, I created and sold instrumental music online, earning roughly $1,000 by learning demand, pricing and distribution the hard way.
+                  </p>
+                </div>
+                <figure class="timeline-media">
+                  <img src="./images/piano.jpg" alt="Piano">
+                </figure>
+              </div>
+            </div>
+
+            <div class="timeline-step" data-reveal>
+              <div class="timeline-step-inner">
+                <div class="timeline-marker">early</div>
+                <div class="timeline-content">
+                  <p class="p" data-reveal>
+                    As a kid I also ran a small eBay operation, selling friends items and taking a 10% margin. Nothing fancy, but real transactions that developed my entrepreneurial instinct.
+                  </p>
+                </div>
+                <figure class="timeline-media placeholder">
+                  <div class="placeholder-content">—</div>
+                </figure>
+              </div>
+            </div>
+
+            <div class="timeline-step" data-reveal>
+              <div class="timeline-step-inner">
+                <div class="timeline-marker">piano</div>
+                <div class="timeline-content">
+                  <p class="p" data-reveal>
+                    At the same time I developed as an advanced piano player, performing diploma-level repertoire (ABRSM 8+). That taught discipline and execution under pressure.
+                  </p>
+                </div>
+                <figure class="timeline-media">
+                  <img src="./images/piano.jpg" alt="Piano performance">
+                </figure>
+              </div>
+            </div>
+
+            <div class="timeline-step" data-reveal>
+              <div class="timeline-step-inner">
+                <div class="timeline-marker">college</div>
+                <div class="timeline-content">
+                  <p class="p" data-reveal>
+                    I entered college as a varsity soccer player and spent my first two years competing at a high level.
+                  </p>
+                </div>
+                <figure class="timeline-media">
+                  <img src="./images/soccer.jpeg" alt="Soccer">
+                </figure>
+              </div>
+            </div>
+
+            <div class="timeline-step" data-reveal>
+              <div class="timeline-step-inner">
+                <div class="timeline-marker">ACL</div>
+                <div class="timeline-content">
+                  <p class="p" data-reveal>
+                    A torn ACL abruptly finished that path and created forced downtime. I used it to go all in on AI.
+                  </p>
+                </div>
+                <figure class="timeline-media placeholder">
+                  <div class="placeholder-content">—</div>
+                </figure>
+              </div>
+            </div>
+
+            <div class="timeline-step" data-reveal>
+              <div class="timeline-step-inner">
+                <div class="timeline-marker">build</div>
+                <div class="timeline-content">
+                  <p class="p" data-reveal>
+                    I taught myself how to build AI systems and automations—moving from idea to a working system fast. I shipped: my own AI application, automations for a local startup, automated Reddit engagement, LinkedIn-scraped outreach, and end-to-end pipelines where I owned outcomes.
+                  </p>
+                </div>
+                <figure class="timeline-media">
+                  <img src="./images/research.jpg" alt="Research">
+                </figure>
+              </div>
+            </div>
+
+            <div class="timeline-step" data-reveal>
+              <div class="timeline-step-inner">
+                <div class="timeline-marker">today</div>
+                <div class="timeline-content">
+                  <p class="p" data-reveal>
+                    Today I'm active in hackathons and entrepreneurship clubs and I intern at a venture capital firm. It sharpened my judgment: lots of ideas, few that matter, even fewer that execute. I want to be on the operating side building systems that create measurable outcomes.
+                  </p>
+                </div>
+                <figure class="timeline-media">
+                  <img src="./images/investing.png" alt="Investing">
+                </figure>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="timeline-arrow timeline-arrow-right" aria-label="Next" id="timelineNext">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
       </div>
-      <figure class="snap-media placeholder"></figure>
-    </div>
-  </section>
 
-  <section class="snap-step">
-    <div class="snap-grid" data-reveal>
-      <div class="snap-text">
-        <div class="journey-marker">piano</div>
-        <p class="p">
-          At the same time I developed as an advanced piano player, performing diploma-level repertoire (ABRSM 8+). That taught discipline and execution under pressure.
-        </p>
-      </div>
-      <figure class="snap-media">
-        <img src="./images/piano.jpg" alt="">
-      </figure>
-    </div>
-  </section>
+      <div class="timeline-dots" id="timelineDots"></div>
+    </main>
+  </div>
 
-  <section class="snap-step">
-    <div class="snap-grid" data-reveal>
-      <div class="snap-text">
-        <div class="journey-marker">college</div>
-        <p class="p">
-          I entered college as a varsity soccer player and spent my first two years competing at a high level.
-        </p>
-      </div>
-      <figure class="snap-media">
-        <img src="./images/soccer.jpeg" alt="">
-      </figure>
-    </div>
-  </section>
-
-  <section class="snap-step">
-    <div class="snap-grid" data-reveal>
-      <div class="snap-text">
-        <div class="journey-marker">ACL</div>
-        <p class="p">
-          A torn ACL abruptly finished that path and created forced downtime. I used it to go all in on AI.
-        </p>
-      </div>
-      <figure class="snap-media placeholder"></figure>
-    </div>
-  </section>
-
-  <section class="snap-step">
-    <div class="snap-grid" data-reveal>
-      <div class="snap-text">
-        <div class="journey-marker">build</div>
-        <p class="p">
-          I taught myself how to build AI systems and automations—moving from idea to a working system fast. I shipped: my own AI application, automations for a local startup, automated Reddit engagement, LinkedIn-scraped outreach, and end-to-end pipelines where I owned outcomes.
-        </p>
-      </div>
-      <figure class="snap-media">
-        <img src="./images/research.jpg" alt="">
-      </figure>
-    </div>
-  </section>
-
-  <section class="snap-step">
-    <div class="snap-grid" data-reveal>
-      <div class="snap-text">
-        <div class="journey-marker">today</div>
-        <p class="p">
-          Today I’m active in hackathons and entrepreneurship clubs and I intern at a venture capital firm. It sharpened my judgment: lots of ideas, few that matter, even fewer that execute. I want to be on the operating side building systems that create measurable outcomes.
-        </p>
-      </div>
-      <figure class="snap-media">
-        <img src="./images/investing.png" alt="">
-      </figure>
-    </div>
-  </section>
-
-</section>
+  <script src="assets/js/reveal.js"></script>
+  <script src="assets/js/journey-timeline.js"></script>
+  <script src="script.js"></script>
