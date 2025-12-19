@@ -1,41 +1,74 @@
-<section class="journey-scroll">
-  <header class="journey-hero">
-    <h1 class="journey-h1">scroll.</h1>
-    <p class="p muted">a compressed timeline, one beat at a time.</p>
-  </header>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>journey · brody weinfurtner</title>
 
-  <main class="journey-main">
-    <section class="journey-stick">
-      <h2 class="journey-h2">
-        <span aria-hidden="true">i learned to&nbsp;</span>
-        <span class="sr-only">i learned to build and ship.</span>
-      </h2>
+  <!-- MUST be in head. MUST be relative. -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./assets/css/animations.css">
+</head>
 
-      <!-- your words (keep count aligned with number of li) -->
-      <ul class="journey-list" aria-hidden="true" style="--count: 18">
-        <li style="--i: 0">sell music.</li>
-        <li style="--i: 1">price demand.</li>
-        <li style="--i: 2">take margin.</li>
-        <li style="--i: 3">practice daily.</li>
-        <li style="--i: 4">perform under pressure.</li>
-        <li style="--i: 5">compete.</li>
-        <li style="--i: 6">get injured.</li>
-        <li style="--i: 7">rebuild focus.</li>
-        <li style="--i: 8">learn tools.</li>
-        <li style="--i: 9">prototype.</li>
-        <li style="--i: 10">debug.</li>
-        <li style="--i: 11">automate.</li>
-        <li style="--i: 12">write systems.</li>
-        <li style="--i: 13">run outreach.</li>
-        <li style="--i: 14">own outcomes.</li>
-        <li style="--i: 15">ship publicly.</li>
-        <li style="--i: 16">build judgment.</li>
-        <li style="--i: 17">choose the operating side.</li>
-      </ul>
-    </section>
+<body>
+  <div class="wrap">
+    <main class="col">
 
-    <section class="journey-fin">
-      <h2 class="journey-h1">fin.</h2>
-    </section>
-  </main>
-</section>
+      <div class="topline">
+        <div><a class="soft-link" href="./index.html">brody weinfurtner</a></div>
+        <div class="bracket">
+          <a class="soft-link" href="./journey.html">journey</a>
+          <a class="soft-link" href="./recent.html">recent</a>
+          <a class="soft-link" href="./contact.html">contact</a>
+          <a class="soft-link" href="./values.html">values</a>
+        </div>
+      </div>
+
+      <section class="journey-scroll">
+        <header class="journey-hero">
+          <h1 class="journey-h1">scroll.</h1>
+          <p class="p muted">a compressed timeline, one beat at a time.</p>
+        </header>
+
+        <main class="journey-main">
+          <section class="journey-stick">
+            <h2 class="journey-h2">
+              <span aria-hidden="true">i learned to&nbsp;</span>
+              <span class="sr-only">i learned to build and ship.</span>
+            </h2>
+
+            <ul class="journey-list" aria-hidden="true" style="--count: 18">
+              <li style="--i: 0">sell music.</li>
+              <li style="--i: 1">price demand.</li>
+              <li style="--i: 2">take margin.</li>
+              <li style="--i: 3">practice daily.</li>
+              <li style="--i: 4">perform under pressure.</li>
+              <li style="--i: 5">compete.</li>
+              <li style="--i: 6">get injured.</li>
+              <li style="--i: 7">rebuild focus.</li>
+              <li style="--i: 8">learn tools.</li>
+              <li style="--i: 9">prototype.</li>
+              <li style="--i: 10">debug.</li>
+              <li style="--i: 11">automate.</li>
+              <li style="--i: 12">write systems.</li>
+              <li style="--i: 13">run outreach.</li>
+              <li style="--i: 14">own outcomes.</li>
+              <li style="--i: 15">ship publicly.</li>
+              <li style="--i: 16">build judgment.</li>
+              <li style="--i: 17">choose the operating side.</li>
+            </ul>
+          </section>
+
+          <section class="journey-fin">
+            <h2 class="journey-h1">fin.</h2>
+          </section>
+        </main>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="./assets/js/reveal.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
