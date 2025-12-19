@@ -81,10 +81,94 @@
     updateProgress(); // Initial update
   }
 
+  // ---- Subtle parallax on main content ----
+  function initParallax() {
+    const main = document.querySelector('main');
+    if (!main) return;
+
+    let ticking = false;
+    function updateParallax() {
+      const scrolled = window.scrollY;
+      const rate = scrolled * 0.02; // Very subtle parallax
+      main.style.transform = `translateY(${rate}px)`;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // ---- Journey page specific animations ----
+  function initJourneyAnimations() {
+    const isJourney = window.location.pathname.includes('journey') || 
+                      document.title.includes('journey');
+    if (!isJourney) return;
+
+    const sections = document.querySelectorAll('.journey-section');
+    
+    // Add staggered reveal on scroll
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, index * 100);
+          sectionObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    });
+
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+    // Add floating effect to markers
+    const markers = document.querySelectorAll('.journey-marker');
+    markers.forEach((marker, index) => {
+      const delay = index * 0.3;
+      marker.style.animation = `floatMarker 4s ease-in-out infinite`;
+      marker.style.animationDelay = `${delay}s`;
+    });
+  }
+
+  // Add floating marker animation
+  if (!document.querySelector('#journey-animations')) {
+    const style = document.createElement('style');
+    style.id = 'journey-animations';
+    style.textContent = `
+      @keyframes floatMarker {
+        0%, 100% { transform: translateY(-8px) translateX(0); }
+        50% { transform: translateY(-12px) translateX(2px); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // ---- Smooth reveal for journey sections ----
+  function initSmoothReveals() {
+    const sections = document.querySelectorAll('.journey-section[data-reveal]');
+    sections.forEach((section, index) => {
+      // Initially hidden
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(20px)';
+    });
+  }
+
   // Initialize on DOM ready
   document.addEventListener('DOMContentLoaded', () => {
     runIntroIfIndex();
     initMagneticCursor();
     initScrollProgress();
+    initParallax();
+    initJourneyAnimations();
+    initSmoothReveals();
   });
 })();
