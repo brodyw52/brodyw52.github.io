@@ -166,153 +166,110 @@ li{ margin: 10px 0; }
 .intro-dismiss{ animation: introFade .55s ease forwards; }
 
 /* ==============================
-   JOURNEY: scroll pan + zoom map
-   (REPLACE old .jmap styles)
+   JOURNEY: sticky phrase + scroll list
 ================================ */
 
-.jmap{ margin-top: 18px; }
+.journey-scroll{ width: 100%; }
 
-/* pinned stage */
-.jmap-stage{
-  position: sticky;
-  top: 86px;
-  height: calc(100vh - 132px);
-
-  border-radius: 16px;
-  overflow: hidden;
-
-  /* KEY FIX: make it opaque so text cannot show through */
-  background: var(--bg);
-
-  border: 1px solid var(--rule);
-  box-shadow: 0 18px 60px rgba(0,0,0,.08);
-
-  /* ensure it sits above scrolling steps */
-  z-index: 10;
-  isolation: isolate;
+/* reuse your site feel */
+.journey-hero{
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 }
 
-.jmap-vignette{
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 4;
-  background:
-    radial-gradient(circle at 40% 25%, rgba(255,255,255,.0) 0%, rgba(0,0,0,.10) 100%),
-    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
-  mix-blend-mode: multiply;
+.journey-h1{
+  font-size: 44px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+  line-height: 1.05;
 }
 
-/* world canvas */
-.jmap-world{
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 3200px;
-  height: 2200px;
-  transform-origin: 0 0;
-  will-change: transform;
-  z-index: 2;
-}
+.journey-main{ width: 100%; }
 
-/* zones */
-.zone{
-  position: absolute;
-  width: 760px;
-  height: 520px;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.45);
-  box-shadow: 0 16px 50px rgba(0,0,0,.12);
-}
-
-.zone-img{
+.journey-stick{
+  display: flex;
+  gap: 28px;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: saturate(1.02) contrast(1.02);
-  transform: scale(1.02);
+  padding-left: 0;
+  line-height: 1.25;
 }
 
-.zone-card{
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  padding: 12px;
-  border-radius: 12px;
-  background: rgba(245,241,234,.94);
-  border: 1px solid rgba(0,0,0,.10);
-}
-
-.zone-tag{
-  display: inline-block;
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-
-.zone-title{
+/* sticky left phrase */
+.journey-h2{
+  position: sticky;
+  top: calc(50% - 0.5lh);
+  height: fit-content;
+  margin: 0;
   font-size: 16px;
   font-weight: 650;
-  letter-spacing: -0.2px;
-  margin-bottom: 4px;
-}
-
-.zone-sub{
-  font-size: 13px;
   color: var(--muted);
+  white-space: nowrap;
 }
 
-/* marker */
-.jmap-marker{
+/* list */
+.journey-list{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-weight: 650;
+}
+
+.journey-list li{
+  font-size: 28px;
+  letter-spacing: -0.2px;
+  opacity: 0.18;
+  transition: opacity .18s ease, filter .18s ease;
+  padding: 18px 0;
+  scroll-snap-align: center;
+}
+
+/* optional snap feel like the demo */
+.journey-list{ scroll-snap-type: y proximity; }
+
+/* center highlight fallback (JS will toggle .is-hot) */
+.journey-list li.is-hot{
+  opacity: 1;
+  filter: brightness(1.08);
+}
+
+/* end section */
+.journey-fin{
+  min-height: 90vh;
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+/* accessibility util (same as demo) */
+.sr-only{
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: var(--fg);
-  box-shadow: 0 0 0 8px rgba(21,21,21,.10), 0 10px 30px rgba(0,0,0,.18);
-  z-index: 6;
-  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* layout */
-.z1{ left: 220px;  top: 240px; }
-.z2{ left: 1380px; top: 200px; }
-.z3{ left: 460px;  top: 1220px; }
-.z4{ left: 1700px; top: 1220px; }
-
-/* steps */
-.jmap-steps{
-  max-width: 720px;
-  margin: 0 auto;
-  padding-top: 22px;
-  position: relative;
-  z-index: 1;
-}
-
-.step{
-  padding: 54px 0;
-  opacity: .78;
-  transition: opacity .2s ease;
-}
-
-.step.is-active{ opacity: 1; }
-
-.step + .step{
-  border-top: 1px solid var(--rule);
-}
-
-.step-final{ padding-bottom: 140px; }
-
+/* mobile */
 @media (max-width: 900px){
-  .jmap-stage{ top: 72px; height: 62vh; }
-  .jmap-world{ width: 2600px; height: 1900px; }
-  .zone{ width: 640px; height: 440px; }
+  .journey-stick{
+    flex-direction: column;
+    gap: 14px;
+  }
+  .journey-h2{
+    position: relative;
+    top: auto;
+  }
+  .journey-list li{
+    font-size: 22px;
+    padding: 14px 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
