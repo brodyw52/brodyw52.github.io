@@ -254,3 +254,31 @@
   init();
 })();
 
+(() => {
+  const els = document.querySelectorAll("[data-reveal]");
+  if (!els.length) return;
+
+  const makeObserver = (root) =>
+    new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("on");
+        });
+      },
+      { root, threshold: 0.12 }
+    );
+
+  // apply your existing .reveal class
+  els.forEach((el) => el.classList.add("reveal"));
+
+  // observe both: window + snap container (if it exists)
+  const snap = document.querySelector(".snap");
+  const obWindow = makeObserver(null);
+  els.forEach((el) => obWindow.observe(el));
+
+  if (snap) {
+    const obSnap = makeObserver(snap);
+    els.forEach((el) => obSnap.observe(el));
+  }
+})();
+
