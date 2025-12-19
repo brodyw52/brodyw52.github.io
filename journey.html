@@ -1,60 +1,107 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>journey · brody weinfurtner</title>
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/assets/css/animations.css">
-</head>
-<body>
-  <div class="wrap">
-    <main class="col">
-      <div class="topline">
-        <div><a class="soft-link" href="/">brody weinfurtner</a></div>
-        <div class="bracket">
-          <a class="soft-link" href="/journey.html">journey</a>
-          <a class="soft-link" href="/recent.html">recent</a>
-          <a class="soft-link" href="/contact.html">contact</a>
-          <a class="soft-link" href="/values.html">values</a>
+<div class="topline">
+  <div><a class="soft-link" href="/">brody weinfurtner</a></div>
+  <div class="bracket">
+    <a class="soft-link" href="/journey.html">journey</a>
+    <a class="soft-link" href="/recent.html">recent</a>
+    <a class="soft-link" href="/contact.html">contact</a>
+    <a class="soft-link" href="/values.html">values</a>
+  </div>
+</div>
+
+<div class="page-title" data-reveal>journey</div>
+<p class="p journey-intro" data-reveal>
+  data science & business at emory. building AI + growth systems. shipping projects and learning in public.
+</p>
+<div class="rule"></div>
+
+<!-- SCROLL STORY -->
+<section class="jmap">
+  <!-- pinned visual -->
+  <div class="jmap-stage" aria-hidden="true">
+    <div class="jmap-vignette"></div>
+
+    <div id="world" class="jmap-world">
+      <!-- ZONE 1 -->
+      <div class="zone z1">
+        <img class="zone-img" src="/images/piano.jpg" alt="">
+        <div class="zone-card">
+          <div class="zone-tag">14</div>
+          <div class="zone-title">transactions + discipline</div>
+          <div class="zone-sub">music, ebay, piano</div>
         </div>
       </div>
 
-      <div class="page-title" data-reveal>journey</div>
-      <p class="p journey-intro" data-reveal>data science & business at emory. building AI + growth systems. shipping projects and learning in public.</p>
-      <div class="rule"></div>
-
-      <div class="journey-section" data-reveal>
-        <div class="journey-marker">14</div>
-        <p class="p" data-reveal>
-          I started buildat at 14. During Covid, I created and sold instrumental music online, earning roughly $1,000 by learning demand, pricing and distribution the hard way. As a kid I also ran a small eBay operation, selling friends items and taking a 10% margin. Nothing fancy, but real transactions that developed my innate entrepreneurial spirit. At the same time I developed as an advanced piano player, performing diploma-level repertoire (ABRSM 8+ expert). This taught me intense discipline as well as execution under pressure.
-        </p>
+      <!-- ZONE 2 -->
+      <div class="zone z2">
+        <img class="zone-img" src="/images/soccer.jpeg" alt="">
+        <div class="zone-card">
+          <div class="zone-tag">college</div>
+          <div class="zone-title">soccer → ACL → pivot</div>
+          <div class="zone-sub">forced downtime created focus</div>
+        </div>
       </div>
 
-      <div class="journey-section" data-reveal>
-        <div class="journey-marker">college</div>
-        <p class="p" data-reveal>
-          I entered college as a varsity soccer player at the NJCAA D3 level, and spent my first two years competing at a high level. A torn ACL abruptly finished that path and created lots of forced downtime. I used this to go all in on AI. I taught myself how to build AI systems and automations, vibe coding and how to move from idea to a working system extremely fast. I spent hours studying tools, reading, listening and experimenting. Next, I shipped: my own AI application, automations for a local startup and unconventional growth systems- automated reddit engagement, deeply personalized cold outreach via Linkedin scraping, and end to end pipelines that I owned outcomes for. I found this work creative, honest and energizing. I then realigned my studies and activities around this found energy.
-        </p>
+      <!-- ZONE 3 -->
+      <div class="zone z3">
+        <img class="zone-img" src="/images/research.jpg" alt="">
+        <div class="zone-card">
+          <div class="zone-tag">build</div>
+          <div class="zone-title">AI systems + automations</div>
+          <div class="zone-sub">shipping fast, owning outcomes</div>
+        </div>
       </div>
 
-      <div class="journey-section" data-reveal>
-        <div class="journey-marker">today</div>
-        <p class="p" data-reveal>
-          Today, I'm active in hackathons, entrepreneurship clubs and intern at a venture capital firm. This exposure has sharpened my judgement: I see lots of ideas, few that matter, and even fewer that actually execute. Watching products, teams, and GTM strategies succeed or fail has made it clear where I want to be- on the operating side, building or involved with a fast growing company building systems that make a measurable difference.
-        </p>
+      <!-- ZONE 4 -->
+      <div class="zone z4">
+        <img class="zone-img" src="/images/investing.png" alt="">
+        <div class="zone-card">
+          <div class="zone-tag">today</div>
+          <div class="zone-title">VC exposure → operating intent</div>
+          <div class="zone-sub">judgment, GTM, durable companies</div>
+        </div>
       </div>
 
-      <div class="journey-section journey-final" data-reveal>
-        <p class="p" data-reveal>
-          My "why" behind all of this is because I feel that I was put on this earth to create something that creates a difference in others lives. I believe in positivity, connection, authenticity and community, and I do my best work when working with like minded people to win.
-        </p>
-      </div>
-
-    </main>
+      <div class="jmap-marker" id="marker"></div>
+    </div>
   </div>
 
-  <script src="/assets/js/reveal.js"></script>
-  <script src="/script.js"></script>
-</body>
-</html>
+  <!-- scroll steps (these drive the camera) -->
+  <div class="jmap-steps">
+    <article class="step" data-step="0">
+      <div class="journey-marker">14</div>
+      <p class="p">
+        I started building at 14. During Covid, I sold instrumental music online and learned demand, pricing, and distribution. I also ran a small eBay operation and took a margin. In parallel, I trained seriously in piano and built discipline under pressure.
+      </p>
+    </article>
+
+    <article class="step" data-step="1">
+      <div class="journey-marker">college</div>
+      <p class="p">
+        I entered college as a varsity soccer player. A torn ACL abruptly ended that path and created downtime. I used it to go all-in on building—learning tools, experimenting, and moving from idea to working system quickly.
+      </p>
+    </article>
+
+    <article class="step" data-step="2">
+      <div class="journey-marker">build</div>
+      <p class="p">
+        I shipped an AI application, automations for a local startup, and unconventional growth systems—automated Reddit engagement, LinkedIn-scraped outreach, and end-to-end pipelines where I owned outcomes. This work became the center of my energy.
+      </p>
+    </article>
+
+    <article class="step" data-step="3">
+      <div class="journey-marker">today</div>
+      <p class="p">
+        Today I’m active in hackathons, entrepreneurship clubs, and I intern at a VC firm. It sharpened my judgment: most ideas don’t matter; fewer execute. I want to be on the operating side building systems that create measurable outcomes.
+      </p>
+    </article>
+
+    <article class="step step-final" data-step="4">
+      <p class="p">
+        My “why” is simple: build things that matter, with people who move fast and stay real.
+      </p>
+    </article>
+  </div>
+</section>
+
+<script src="/assets/js/reveal.js"></script>
+<script src="/assets/js/journey-map.js"></script>
