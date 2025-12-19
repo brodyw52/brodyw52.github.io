@@ -167,7 +167,7 @@ li{ margin: 10px 0; }
 
 /* ==============================
    JOURNEY: scroll pan + zoom map
-   (append to styles.css)
+   (REPLACE old .jmap styles)
 ================================ */
 
 .jmap{ margin-top: 18px; }
@@ -175,28 +175,35 @@ li{ margin: 10px 0; }
 /* pinned stage */
 .jmap-stage{
   position: sticky;
-  top: 86px; /* under your topline */
+  top: 86px;
   height: calc(100vh - 132px);
+
   border-radius: 16px;
   overflow: hidden;
-  background: rgba(255,255,255,.55);
+
+  /* KEY FIX: make it opaque so text cannot show through */
+  background: var(--bg);
+
   border: 1px solid var(--rule);
   box-shadow: 0 18px 60px rgba(0,0,0,.08);
+
+  /* ensure it sits above scrolling steps */
+  z-index: 10;
+  isolation: isolate;
 }
 
-/* subtle vignette consistent with your bg */
 .jmap-vignette{
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 4;
   background:
-    radial-gradient(circle at 40% 25%, rgba(255,255,255,.0) 0%, rgba(0,0,0,.12) 100%),
+    radial-gradient(circle at 40% 25%, rgba(255,255,255,.0) 0%, rgba(0,0,0,.10) 100%),
     linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
   mix-blend-mode: multiply;
 }
 
-/* large "world" canvas the camera moves over */
+/* world canvas */
 .jmap-world{
   position: absolute;
   left: 0;
@@ -205,9 +212,10 @@ li{ margin: 10px 0; }
   height: 2200px;
   transform-origin: 0 0;
   will-change: transform;
+  z-index: 2;
 }
 
-/* zones are your story tiles */
+/* zones */
 .zone{
   position: absolute;
   width: 760px;
@@ -223,19 +231,19 @@ li{ margin: 10px 0; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
   filter: saturate(1.02) contrast(1.02);
   transform: scale(1.02);
 }
 
-/* caption card: use your highlight language, not glassmorphism */
 .zone-card{
   position: absolute;
   left: 16px;
   right: 16px;
   bottom: 16px;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 12px;
-  background: rgba(245,241,234,.92);
+  background: rgba(245,241,234,.94);
   border: 1px solid rgba(0,0,0,.10);
 }
 
@@ -260,71 +268,53 @@ li{ margin: 10px 0; }
   color: var(--muted);
 }
 
-/* path marker (current position) */
+/* marker */
 .jmap-marker{
   position: absolute;
   width: 12px;
   height: 12px;
   border-radius: 999px;
   background: var(--fg);
-  box-shadow:
-    0 0 0 8px rgba(21,21,21,.10),
-    0 10px 30px rgba(0,0,0,.18);
+  box-shadow: 0 0 0 8px rgba(21,21,21,.10), 0 10px 30px rgba(0,0,0,.18);
   z-index: 6;
   transform: translate(-50%, -50%);
 }
 
-/* world layout (tweak if you want different camera beats) */
+/* layout */
 .z1{ left: 220px;  top: 240px; }
 .z2{ left: 1380px; top: 200px; }
 .z3{ left: 460px;  top: 1220px; }
 .z4{ left: 1700px; top: 1220px; }
 
-/* scroll steps */
+/* steps */
 .jmap-steps{
   max-width: 720px;
   margin: 0 auto;
-  padding-top: 18px;
+  padding-top: 22px;
+  position: relative;
+  z-index: 1;
 }
 
 .step{
-  padding: 44px 0;
-  opacity: .82;
-  transition: opacity .25s ease;
+  padding: 54px 0;
+  opacity: .78;
+  transition: opacity .2s ease;
 }
 
 .step.is-active{ opacity: 1; }
 
-.step + .step{ border-top: 1px solid var(--rule); }
-
-.step-final{ padding-bottom: 120px; }
-
-/* optional: slightly stronger marker label style to match your existing journey-marker */
-.journey-marker{
-  display: inline-block;
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
+.step + .step{
+  border-top: 1px solid var(--rule);
 }
 
-/* mobile adjustments */
+.step-final{ padding-bottom: 140px; }
+
 @media (max-width: 900px){
-  .jmap-stage{
-    top: 72px;
-    height: 62vh;
-  }
+  .jmap-stage{ top: 72px; height: 62vh; }
   .jmap-world{ width: 2600px; height: 1900px; }
   .zone{ width: 640px; height: 440px; }
-  .zone-title{ font-size: 15px; }
 }
 
-/* reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .jmap-world,
-  .jmap-marker,
-  .step{
-    transition: none !important;
-  }
+  .jmap-world, .jmap-marker, .step{ transition: none !important; }
 }
