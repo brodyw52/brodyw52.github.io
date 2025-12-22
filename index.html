@@ -7,55 +7,51 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="assets/css/animations.css" />
 
-  <!-- index-only fixes: highlight + spacing + stop accidental underlines -->
+  <!-- Index-only overrides -->
   <style>
-    /* Stop underlines from being applied to non-links (you had spans with soft-link) */
-    body[data-page="index"] .soft-link { text-decoration: underline; }
-    body[data-page="index"] span.soft-link { text-decoration: none; } /* safety */
+    /* Make sure ONLY actual links get link styling */
+    .p .soft-link { text-decoration: underline; }
+    .p span.soft-link { text-decoration: none !important; } /* kills your old span usage if any survives */
 
-    /* Fix paragraph rhythm on this page */
-    body[data-page="index"] .p { margin: 14px 0; }
-    body[data-page="index"] .topline { margin-bottom: 22px; }
-    body[data-page="index"] .rule { margin: 18px 0 10px; }
-
-    /* Make the bracket nav spacing consistent even if global CSS changes */
-    body[data-page="index"] .nav.bracket {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
+    /* Fix “underline on spaces” + clean link rendering */
+    a.soft-link{
+      text-decoration-skip-ink: auto;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
     }
 
-    /* Aesthetic highlight for “growth engineer” (high contrast so it actually shows) */
-    .accent {
+    /* Creative highlight that can’t get “flattened” by your global CSS */
+    .accent{
       position: relative;
       display: inline-block;
-      padding: 0.10em 0.55em;
-      border-radius: 999px;
-      border: 1px solid rgba(30, 30, 30, 0.22);
-      background: linear-gradient(
-        90deg,
-        rgba(215, 205, 255, 0.95),
-        rgba(255, 224, 205, 0.92)
-      );
-      box-shadow:
-        0 10px 26px rgba(0,0,0,0.10),
-        inset 0 1px 0 rgba(255,255,255,0.55);
+      font-weight: 700;
       letter-spacing: 0.2px;
+      padding: 0.06em 0.35em;
+      margin: 0 -0.08em;          /* hugs the word */
       white-space: nowrap;
+      z-index: 0;
     }
-
-    .accent::after {
-      content: "";
-      position: absolute;
-      inset: -6px -10px;
+    .accent::before{
+      content:"";
+      position:absolute;
+      left:-0.18em; right:-0.18em;
+      top:52%;
+      height: 0.95em;
+      transform: translateY(-50%) rotate(-1.2deg);
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, rgba(215,205,255,0.55), transparent 55%),
-                  radial-gradient(circle at 70% 80%, rgba(255,224,205,0.50), transparent 60%);
-      filter: blur(10px);
-      opacity: 0.65;
+      background: linear-gradient(90deg,
+        rgba(180,160,255,0.38),
+        rgba(255,200,160,0.34)
+      ) !important;
+      border: 1px solid rgba(60,60,60,0.18) !important;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.08) !important;
       z-index: -1;
     }
+
+    /* Spacing cleanup (bottom area) */
+    .rule{ margin: 18px 0 12px; }
+    .nav.bracket{ margin-top: 16px; }
+    .p{ margin: 0 0 14px; } /* if your global already handles this, remove */
   </style>
 </head>
 
@@ -83,7 +79,7 @@
       </p>
 
       <p class="p" data-reveal>
-        So far, I’ve built self healing scrapers, deeply personalized email campaigns, social media automations, and out of the box growth plays.
+        So far, I’ve built self healing scrapers, deeply personalized email campaigns, social media automations and out of the box growth plays.
       </p>
 
       <p class="p" data-reveal>
@@ -92,17 +88,17 @@
 
       <p class="p" data-reveal>
         On the side, I’m a
-        <a class="soft-link" href="#" target="_blank" rel="noreferrer">athlete</a>,
+        <a class="soft-link" href="https://northcoast.vc/" target="_blank" rel="noreferrer">athlete</a>,
         <a class="soft-link" href="https://www.youtube.com/watch?v=GLuzmoZb2dg&list=RDGLuzmoZb2dg&start_radio=1" target="_blank" rel="noreferrer">musician</a>,
         and
-        <a class="soft-link" href="journey.html">lifelong builder</a>.
+        <a class="soft-link" href="https://brodyw52.github.io/journey.html" target="_blank" rel="noreferrer">lifelong builder</a>.
       </p>
 
-      <div class="nav bracket" style="margin-top:16px;" data-reveal>
+      <div class="nav bracket" data-reveal>
         <a class="soft-link" href="https://www.linkedin.com/in/brody-weinfurtner/" target="_blank" rel="noreferrer">LinkedIn</a>
         <a class="soft-link" href="https://github.com/brodyw52" target="_blank" rel="noreferrer">GitHub</a>
         <a class="soft-link" href="https://calendar.app.google/NqCDcPiRZ2DYauXH8" target="_blank" rel="noreferrer">Calendar</a>
-        <a class="soft-link" href="contact.html">Email</a>
+        <a class="soft-link" href="https://brodyw52.github.io/contact.html" target="_blank" rel="noreferrer">Email</a>
       </div>
 
       <div class="rule" data-reveal></div>
