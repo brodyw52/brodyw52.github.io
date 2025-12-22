@@ -6,6 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="assets/css/animations.css" />
+
+  <!-- Page-specific tweaks: highlight + spacing (doesn't touch your global CSS) -->
+  <style>
+    /* Aesthetic highlight for “growth engineer” */
+    .accent {
+      display: inline-block;
+      padding: 0.08em 0.45em;
+      border-radius: 999px;
+      border: 1px solid rgba(60,60,60,0.18);
+      background: linear-gradient(90deg, rgba(180,160,255,0.22), rgba(255,200,160,0.22));
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    /* Tighten bottom spacing without changing your layout system */
+    .rule { margin: 18px 0 14px; }
+    .nav.bracket { gap: 10px; }
+  </style>
 </head>
 
 <body data-page="index">
@@ -21,21 +40,30 @@
         </div>
       </div>
 
-      <div class="p" data-reveal><strong>Hey, i’m Brody, a growth engineer</strong></div>
+      <div class="p" data-reveal>
+        <strong>Hey, i’m Brody, a <span class="accent">growth engineer</span></strong>
+      </div>
 
       <p class="p" data-reveal>
-        <span class="soft-link"> I currently work in VC @<a class="soft-link" href="https://northcoast.vc/" target="_blank" rel="noreferrer">north coast ventures</a> where I study how companies really grow, not how they pitch it. @ Emory, I study the technology to make growth happen. 
-      </p>
-      <p class="p" data-reveal>
-        <span class="soft-link">so far, I’ve built self healing scrapers, deeply personalized email campaigns, social media automations and out of the box growth plays. 
-      </p>
-      
-      <p class="p" data-reveal>
-        <span class="soft-link">i believe the future of distribution isn't about more marketing slop, it's about better, more targeted growth engineering.</span>
+        I currently work in VC @
+        <a class="soft-link" href="https://northcoast.vc/" target="_blank" rel="noreferrer">north coast ventures</a>
+        where I study how companies really grow, not how they pitch it. @ Emory, I study the technology to make growth happen.
       </p>
 
       <p class="p" data-reveal>
-        <span class="soft-link">on the side, I’m a <a class="soft-link" href="https://northcoast.vc/" target="_blank" rel="noreferrer">college athlete</a>, <a class="soft-link" href="https://www.youtube.com/watch?v=GLuzmoZb2dg&list=RDGLuzmoZb2dg&start_radio=1" target="_blank" rel="noreferrer">advanced musician</a>, entrepreneur and <a class="soft-link" href="https://brodyw52.github.io/journey.html" target="_blank" rel="noreferrer">lifelong builder</a>.</span>
+        So far, I’ve built self healing scrapers, deeply personalized email campaigns, social media automations and out of the box growth plays.
+      </p>
+
+      <p class="p" data-reveal>
+        I believe the future of distribution isn't about more marketing slop, it's about better, more targeted growth engineering.
+      </p>
+
+      <p class="p" data-reveal>
+        On the side, I’m a
+        <a class="soft-link" href="https://northcoast.vc/" target="_blank" rel="noreferrer">college athlete</a>,
+        <a class="soft-link" href="https://www.youtube.com/watch?v=GLuzmoZb2dg&list=RDGLuzmoZb2dg&start_radio=1" target="_blank" rel="noreferrer">advanced musician</a>,
+        entrepreneur and
+        <a class="soft-link" href="https://brodyw52.github.io/journey.html" target="_blank" rel="noreferrer">lifelong builder</a>.
       </p>
 
       <div class="nav bracket" style="margin-top:18px;" data-reveal>
@@ -48,10 +76,7 @@
       <div class="rule" data-reveal></div>
 
       <p class="p" data-reveal>
-        Here's 
-        <a class="soft-link" href="recent.html"> what i've built recently</a>
-         and 
-        <a class="soft-link" href="values.html"> my core values</a>.
+        Here’s <a class="soft-link" href="recent.html">what i've built recently</a> and <a class="soft-link" href="values.html">my core values</a>.
       </p>
     </main>
   </div>
@@ -60,5 +85,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
