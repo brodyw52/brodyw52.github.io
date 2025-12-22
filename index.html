@@ -9,32 +9,48 @@
 
   <!-- Index-only overrides -->
   <style>
-    /* Make sure ONLY actual links get link styling */
-    .p .soft-link { text-decoration: underline; }
-    .p span.soft-link { text-decoration: none !important; } /* kills your old span usage if any survives */
-
-    /* Fix “underline on spaces” + clean link rendering */
-    a.soft-link{
-      text-decoration-skip-ink: auto;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 2px;
+    /* Make sure ONLY actual links get link styling - remove all underlines */
+    .p .soft-link, 
+    .p a.soft-link,
+    .nav .soft-link,
+    .nav a.soft-link,
+    a.soft-link { 
+      text-decoration: none !important;
+      background-image: linear-gradient(120deg, var(--hl-a), var(--hl-b));
+      background-size: 100% 42%;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      border-radius: 5px;
+      padding: 0 3px;
+      transition: background-size .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+    a.soft-link:hover,
+    .p a.soft-link:hover,
+    .nav a.soft-link:hover{
+      text-decoration: none !important;
+      background-size: 100% 85%;
+      box-shadow: 0 6px 24px rgba(0,0,0,.14);
+      transform: translateY(-1px);
     }
 
-    /* Creative highlight that can’t get “flattened” by your global CSS */
+    /* Animated highlight for "growth engineer" */
     .accent{
       position: relative;
       display: inline-block;
       font-weight: 700;
       letter-spacing: 0.2px;
       padding: 0.06em 0.35em;
-      margin: 0 -0.08em;          /* hugs the word */
+      margin: 0 -0.08em;
       white-space: nowrap;
       z-index: 0;
+      color: inherit;
     }
+    
     .accent::before{
       content:"";
       position:absolute;
-      left:-0.18em; right:-0.18em;
+      left:-0.18em; 
+      right:-0.18em;
       top:52%;
       height: 0.95em;
       transform: translateY(-50%) rotate(-1.2deg);
@@ -42,16 +58,83 @@
       background: linear-gradient(90deg,
         rgba(180,160,255,0.38),
         rgba(255,200,160,0.34)
-      ) !important;
-      border: 1px solid rgba(60,60,60,0.18) !important;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.08) !important;
+      );
+      border: 1px solid rgba(60,60,60,0.18);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.08);
       z-index: -1;
+      animation: accentGlow 3s ease-in-out infinite;
+    }
+    
+    /* Animated glow effect */
+    @keyframes accentGlow {
+      0%, 100% {
+        opacity: 1;
+        transform: translateY(-50%) rotate(-1.2deg) scale(1);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.08), 0 0 20px rgba(180,160,255,0.2);
+      }
+      50% {
+        opacity: 0.9;
+        transform: translateY(-50%) rotate(-1.2deg) scale(1.02);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.12), 0 0 30px rgba(180,160,255,0.35);
+      }
+    }
+    
+    /* Gradient animation on the highlight */
+    .accent::after{
+      content:"";
+      position:absolute;
+      left:-0.18em; 
+      right:-0.18em;
+      top:52%;
+      height: 0.95em;
+      transform: translateY(-50%) rotate(-1.2deg);
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        rgba(255,200,160,0.4),
+        rgba(180,160,255,0.4)
+      );
+      z-index: -2;
+      opacity: 0;
+      animation: gradientShift 4s ease-in-out infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% {
+        opacity: 0;
+        transform: translateY(-50%) rotate(-1.2deg) translateX(0);
+      }
+      50% {
+        opacity: 0.3;
+        transform: translateY(-50%) rotate(-1.2deg) translateX(2px);
+      }
     }
 
-    /* Spacing cleanup (bottom area) */
-    .rule{ margin: 18px 0 12px; }
-    .nav.bracket{ margin-top: 16px; }
-    .p{ margin: 0 0 14px; } /* if your global already handles this, remove */
+    /* Spacing fixes */
+    .rule{ margin: 28px 0 20px; }
+    .nav.bracket{ margin-top: 24px; margin-bottom: 0; }
+    .p{ margin: 0 0 18px; }
+    
+    /* Fix spacing after intro paragraph */
+    .p:first-of-type {
+      margin-bottom: 20px;
+    }
+    
+    /* Better spacing for the bottom section */
+    .rule + .p {
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+    
+    /* Ensure proper spacing between paragraphs */
+    .p + .p {
+      margin-top: 0;
+    }
+    
+    /* Fix spacing for the nav links section */
+    .nav.bracket[data-reveal] {
+      margin-top: 24px;
+      margin-bottom: 0;
+    }
   </style>
 </head>
 
