@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="assets/css/animations.css" />
 
-  <!-- Index-only overrides -->
+  <!-- Index-only overrides - loaded after all CSS to ensure priority -->
   <style>
     /* Make sure ONLY actual links get link styling - remove all underlines */
     .p .soft-link, 
@@ -33,79 +33,99 @@
       transform: translateY(-1px);
     }
 
-    /* Animated highlight for "growth engineer" */
-    .accent{
-      position: relative;
-      display: inline-block;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      padding: 0.06em 0.35em;
-      margin: 0 -0.08em;
-      white-space: nowrap;
-      z-index: 0;
-      color: inherit;
+    /* Animated highlight for "growth engineer" - with high specificity */
+    span.accent,
+    .p .accent,
+    strong .accent {
+      position: relative !important;
+      display: inline-block !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.2px !important;
+      padding: 0.06em 0.35em !important;
+      margin: 0 -0.08em !important;
+      white-space: nowrap !important;
+      z-index: 0 !important;
+      color: inherit !important;
     }
     
-    .accent::before{
-      content:"";
-      position:absolute;
-      left:-0.18em; 
-      right:-0.18em;
-      top:52%;
-      height: 0.95em;
-      transform: translateY(-50%) rotate(-1.2deg);
-      border-radius: 999px;
+    span.accent::before,
+    .p .accent::before,
+    strong .accent::before {
+      content: "" !important;
+      position: absolute !important;
+      left: -0.18em !important;
+      right: -0.18em !important;
+      top: 52% !important;
+      height: 0.95em !important;
+      transform: translateY(-50%) rotate(-1.2deg) !important;
+      border-radius: 999px !important;
       background: linear-gradient(90deg,
-        rgba(180,160,255,0.38),
-        rgba(255,200,160,0.34)
-      );
-      border: 1px solid rgba(60,60,60,0.18);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.08);
-      z-index: -1;
-      animation: accentGlow 3s ease-in-out infinite;
+        rgba(180,160,255,0.45),
+        rgba(255,200,160,0.4)
+      ) !important;
+      border: 1px solid rgba(60,60,60,0.18) !important;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.08), 0 0 20px rgba(180,160,255,0.25) !important;
+      z-index: -1 !important;
+      animation: accentGlow 2.5s ease-in-out infinite !important;
+      will-change: transform, box-shadow !important;
     }
     
-    /* Animated glow effect */
+    /* Animated glow effect - animating transform and box-shadow */
     @keyframes accentGlow {
       0%, 100% {
-        opacity: 1;
-        transform: translateY(-50%) rotate(-1.2deg) scale(1);
-        box-shadow: 0 10px 26px rgba(0,0,0,0.08), 0 0 20px rgba(180,160,255,0.2);
+        transform: translateY(-50%) rotate(-1.2deg) scale(1) !important;
+        box-shadow: 0 10px 26px rgba(0,0,0,0.08), 0 0 20px rgba(180,160,255,0.25) !important;
       }
       50% {
-        opacity: 0.9;
-        transform: translateY(-50%) rotate(-1.2deg) scale(1.02);
-        box-shadow: 0 10px 26px rgba(0,0,0,0.12), 0 0 30px rgba(180,160,255,0.35);
+        transform: translateY(-50%) rotate(-1.2deg) scale(1.04) !important;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 0 35px rgba(180,160,255,0.5) !important;
       }
     }
     
     /* Gradient animation on the highlight */
-    .accent::after{
-      content:"";
-      position:absolute;
-      left:-0.18em; 
-      right:-0.18em;
-      top:52%;
-      height: 0.95em;
-      transform: translateY(-50%) rotate(-1.2deg);
-      border-radius: 999px;
+    span.accent::after,
+    .p .accent::after,
+    strong .accent::after {
+      content: "" !important;
+      position: absolute !important;
+      left: -0.18em !important;
+      right: -0.18em !important;
+      top: 52% !important;
+      height: 0.95em !important;
+      transform: translateY(-50%) rotate(-1.2deg) !important;
+      border-radius: 999px !important;
       background: linear-gradient(90deg,
         rgba(255,200,160,0.4),
         rgba(180,160,255,0.4)
-      );
-      z-index: -2;
-      opacity: 0;
-      animation: gradientShift 4s ease-in-out infinite;
+      ) !important;
+      z-index: -2 !important;
+      opacity: 0 !important;
+      animation: gradientShift 4s ease-in-out infinite !important;
+      will-change: transform, opacity !important;
     }
     
     @keyframes gradientShift {
       0%, 100% {
-        opacity: 0;
-        transform: translateY(-50%) rotate(-1.2deg) translateX(0);
+        opacity: 0 !important;
+        transform: translateY(-50%) rotate(-1.2deg) translateX(0) scale(1) !important;
       }
       50% {
-        opacity: 0.3;
-        transform: translateY(-50%) rotate(-1.2deg) translateX(2px);
+        opacity: 0.4 !important;
+        transform: translateY(-50%) rotate(-1.2deg) translateX(3px) scale(1.05) !important;
+      }
+    }
+    
+    /* Ensure animations work even with reduced motion preference */
+    @media (prefers-reduced-motion: no-preference) {
+      span.accent::before,
+      .p .accent::before,
+      strong .accent::before {
+        animation: accentGlow 2.5s ease-in-out infinite !important;
+      }
+      span.accent::after,
+      .p .accent::after,
+      strong .accent::after {
+        animation: gradientShift 4s ease-in-out infinite !important;
       }
     }
 
