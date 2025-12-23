@@ -144,7 +144,14 @@
       const stagger = parseInt(element.style.getPropertyValue('--stagger')) || 45;
       words.forEach((word, index) => {
         const delay = index * stagger;
-        setTimeout(() => word.classList.add('reveal-word-on'), delay);
+        setTimeout(() => {
+          word.classList.add('reveal-word-on');
+          // Ensure parent link also gets proper styling if word is inside a link
+          const parentLink = word.closest('a.soft-link');
+          if (parentLink) {
+            parentLink.style.color = 'inherit';
+          }
+        }, delay);
       });
     } else {
       element.classList.add('reveal-on');
@@ -195,12 +202,52 @@
       const hasWords = el.querySelectorAll('.reveal-word').length > 0;
       const isReveal = el.classList.contains('reveal') || el.hasAttribute('data-reveal');
 
+      // Always observe elements with data-reveal or reveal class, even if they don't have words
       if (!hasWords && !isReveal) return;
+      
+      // Skip if already revealed
+      if (el.dataset.revealed === 'true') return;
 
       if (isInViewport(el)) {
         setTimeout(() => triggerAnimation(el), 60);
       } else {
         observer.observe(el);
+      }
+    });
+    
+    // Also observe paragraphs with data-reveal that might have been skipped (e.g., >40 words)
+    // This ensures ALL paragraphs with data-reveal get animated, even if they weren't split
+    const allParagraphs = document.querySelectorAll('p[data-reveal], .p[data-reveal]');
+    const targetsSet = new Set(targets);
+    
+    allParagraphs.forEach((el) => {
+      // Skip if already revealed
+      if (el.dataset.revealed === 'true') return;
+      
+      // Check if this element is already in the targets list
+      const alreadyObserved = targetsSet.has(el);
+      
+      if (!alreadyObserved) {
+        const hasWords = el.querySelectorAll('.reveal-word').length > 0;
+        
+        // If no words but has data-reveal, ensure it gets the reveal-on class
+        if (!hasWords) {
+          if (isInViewport(el)) {
+            setTimeout(() => {
+              el.classList.add('reveal-on');
+              el.dataset.revealed = 'true';
+            }, 60);
+          } else {
+            observer.observe(el);
+          }
+        } else {
+          // Has words but might not have been observed - ensure it's observed
+          if (!isInViewport(el)) {
+            observer.observe(el);
+          } else {
+            setTimeout(() => triggerAnimation(el), 60);
+          }
+        }
       }
     });
 

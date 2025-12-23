@@ -88,6 +88,12 @@ a:hover{ text-decoration-thickness: 2px; }
 .bracket a::before{ content:"["; color: var(--muted); }
 .bracket a::after{ content:"]"; color: var(--muted); }
 
+/* Make current page link bold */
+.bracket a.current-page,
+.nav.bracket a.current-page {
+  font-weight: 700;
+}
+
 .rule{
   height:1px;
   background: var(--rule);

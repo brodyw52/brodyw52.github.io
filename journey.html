@@ -5,9 +5,176 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>journey · brody weinfurtner</title>
 
-  <!-- MUST be in head. MUST be relative. -->
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./assets/css/animations.css">
+  
+  <style>
+    /* Ensure journey paragraphs animate properly */
+    body[data-page="journey"] .p[data-reveal] {
+      opacity: 0 !important;
+      transform: translateX(-12px) translateY(8px) rotateY(15deg) !important;
+      filter: blur(4px) !important;
+      transition: opacity 0.75s cubic-bezier(0.2, 0, 0.2, 1),
+                  transform 0.75s cubic-bezier(0.2, 0, 0.2, 1),
+                  filter 0.75s cubic-bezier(0.2, 0, 0.2, 1) !important;
+      will-change: opacity, transform, filter;
+    }
+    
+    /* Revealed state - works for both word-split and non-word-split paragraphs */
+    body[data-page="journey"] .p[data-reveal].reveal-on,
+    body[data-page="journey"] .p[data-reveal][data-revealed="true"] {
+      opacity: 1 !important;
+      transform: translateX(0) translateY(0) rotateY(0deg) !important;
+      filter: blur(0) !important;
+    }
+    
+    /* Ensure paragraphs with reveal-word spans also get revealed when all words are revealed */
+    body[data-page="journey"] .p[data-reveal][data-revealed="true"] .reveal-word {
+      opacity: 1 !important;
+      transform: translateX(0) translateY(0) rotateY(0deg) !important;
+      filter: blur(0) !important;
+    }
+    
+    /* Ensure soft-link styles work properly in journey paragraphs */
+    .p .soft-link,
+    .p a.soft-link,
+    a.soft-link {
+      color: var(--fg) !important;
+      text-decoration: none !important;
+      background-image: linear-gradient(120deg, var(--hl-a), var(--hl-b)) !important;
+      background-size: 100% 42% !important;
+      background-position: 0 100% !important;
+      background-repeat: no-repeat !important;
+      border-radius: 5px !important;
+      padding: 0 3px !important;
+      display: inline !important;
+      opacity: 1 !important;
+    }
+    
+    /* Ensure reveal-word spans inside links are visible and match text color */
+    .p a.soft-link .reveal-word,
+    a.soft-link .reveal-word {
+      color: var(--fg) !important;
+      display: inline-block !important;
+    }
+    
+    /* When paragraph is revealed, ensure link words are also revealed */
+    .p[data-revealed="true"] a.soft-link .reveal-word,
+    .p.reveal-on a.soft-link .reveal-word,
+    .p[data-revealed="true"] a.soft-link,
+    .p.reveal-on a.soft-link {
+      opacity: 1 !important;
+    }
+    
+    .p[data-revealed="true"] a.soft-link .reveal-word,
+    .p.reveal-on a.soft-link .reveal-word {
+      transform: translateX(0) translateY(0) rotateY(0deg) !important;
+      filter: blur(0) !important;
+    }
+    
+    /* Ensure link text matches regular text color - no opacity issues */
+    .p a.soft-link {
+      position: relative;
+      z-index: 1;
+      color: var(--fg) !important;
+      opacity: 1 !important;
+    }
+    
+    /* Force visibility of reveal-word spans inside links - match text color */
+    .p a.soft-link .reveal-word {
+      color: var(--fg) !important;
+    }
+    
+    /* When revealed, ensure full opacity and proper color */
+    .p a.soft-link .reveal-word.reveal-word-on {
+      opacity: 1 !important;
+      color: var(--fg) !important;
+    }
+    
+    .p a.soft-link:hover,
+    a.soft-link:hover {
+      background-size: 100% 85% !important;
+      box-shadow: 0 6px 24px rgba(0,0,0,.14) !important;
+      transform: translateY(-1px) !important;
+    }
+  </style>
+  
+  <script>
+    // Ensure all journey paragraphs animate - backup for reveal.js
+    // This runs after reveal.js to catch any paragraphs that weren't handled
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait for reveal.js to fully process (it runs at DOMContentLoaded + 50ms)
+      setTimeout(() => {
+        const paragraphs = document.querySelectorAll('body[data-page="journey"] .p[data-reveal]');
+        
+        paragraphs.forEach((p) => {
+          // Skip if already revealed by reveal.js
+          if (p.dataset.revealed === 'true') return;
+          
+          const hasWords = p.querySelectorAll('.reveal-word').length > 0;
+          
+          // Create a single observer for this paragraph
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting && entry.target.dataset.revealed !== 'true') {
+                if (hasWords) {
+                  // Has words - animate them
+                  const words = entry.target.querySelectorAll('.reveal-word:not(.reveal-word-on)');
+                  if (words.length > 0) {
+                    const stagger = 45;
+                    words.forEach((word, wordIndex) => {
+                      setTimeout(() => {
+                        word.classList.add('reveal-word-on');
+                      }, wordIndex * stagger);
+                    });
+                  }
+                } else {
+                  // No words - use fallback animation
+                  entry.target.classList.add('reveal-on');
+                }
+                entry.target.dataset.revealed = 'true';
+                observer.unobserve(entry.target);
+              }
+            });
+          }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -10% 0px'
+          });
+          
+          // Check if already in viewport
+          const rect = p.getBoundingClientRect();
+          const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+          const threshold = windowHeight * 0.15;
+          const isVisible = rect.top < windowHeight - threshold && rect.bottom > threshold;
+          
+          if (isVisible && p.dataset.revealed !== 'true') {
+            // Already visible - trigger immediately
+            setTimeout(() => {
+              if (p.dataset.revealed === 'true') return; // Double check
+              
+              if (hasWords) {
+                const words = p.querySelectorAll('.reveal-word:not(.reveal-word-on)');
+                if (words.length > 0) {
+                  const stagger = 45;
+                  words.forEach((word, wordIndex) => {
+                    setTimeout(() => {
+                      word.classList.add('reveal-word-on');
+                    }, wordIndex * stagger);
+                  });
+                }
+              } else {
+                p.classList.add('reveal-on');
+              }
+              p.dataset.revealed = 'true';
+            }, 150);
+          } else if (!isVisible) {
+            // Not visible yet - observe it
+            observer.observe(p);
+          }
+        });
+      }, 300); // Wait a bit longer to ensure reveal.js has processed
+    });
+  </script>
 </head>
 
 <body data-page="journey">
@@ -25,131 +192,22 @@
       </div>
 
       <div class="page-title" data-reveal>journey</div>
-      <p class="p muted" data-reveal>horizontal timeline. one beat at a time.</p>
-      <div class="rule"></div>
 
-      <div class="timeline-container">
-        <button class="timeline-arrow timeline-arrow-left" aria-label="Previous" id="timelinePrev">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </button>
-        
-        <div class="timeline-wrapper" id="timelineWrapper">
-          <div class="timeline-track" id="timelineTrack">
+      <div>
+        <p class="p" data-reveal>From selling beats online at 14 to running eBay flips for profit, I learned early on that I love building from zero. This entrepreneurial spirit was forged alongside a rigorous background in <a class="soft-link" href="https://www.youtube.com/watch?v=GLuzmoZb2dg&list=RDGLuzmoZb2dg&start_radio=1" target="_blank" rel="noreferrer">classical piano</a> (ABRSM 8+), where I learned that high-level performance requires obsessive discipline.</p>
 
-            <div class="timeline-step" data-reveal>
-              <div class="timeline-step-inner">
-                <div class="timeline-marker">14</div>
-                <div class="timeline-content">
-                  <p class="p" data-reveal>
-                    I started building at 14. During Covid, I created and sold instrumental music online, earning roughly $1,000 by learning demand, pricing and distribution the hard way.
-                  </p>
-                </div>
-                <figure class="timeline-media">
-                  <img src="./images/piano.jpg" alt="Piano">
-                </figure>
-              </div>
-            </div>
+        <p class="p" data-reveal>Entering college as a <a class="soft-link" href="https://www.oxfordcollegeathletics.com/sports/msoc/2024-25/bios/weinfurtner_brody_ewkc?view=career&pos=kickers" target="_blank" rel="noreferrer">varsity athlete</a> (Emory Oxford NJCAA D3), I was sidelined sophomore year after a serious ACL injury. This adversity forced downtime and I channelled my energy into AI, teaching myself growth engineering, scraping, system orchestration and much <em>more</em>.</p>
 
-            <div class="timeline-step" data-reveal>
-              <div class="timeline-step-inner">
-                <div class="timeline-marker">early</div>
-                <div class="timeline-content">
-                  <p class="p" data-reveal>
-                    As a kid I also ran a small eBay operation, selling friends items and taking a 10% margin. Nothing fancy, but real transactions that developed my entrepreneurial instinct.
-                  </p>
-                </div>
-                <figure class="timeline-media placeholder">
-                  <div class="placeholder-content">—</div>
-                </figure>
-              </div>
-            </div>
+        <p class="p" data-reveal>I fell in love with this work due to how well it fits my strengths in creativity, execution and obsession with data. I love owning outcomes; and in this field, if you drive results, the data proves it.</p>
 
-            <div class="timeline-step" data-reveal>
-              <div class="timeline-step-inner">
-                <div class="timeline-marker">piano</div>
-                <div class="timeline-content">
-                  <p class="p" data-reveal>
-                    At the same time I developed as an advanced piano player, performing diploma-level repertoire (ABRSM 8+). That taught discipline and execution under pressure.
-                  </p>
-                </div>
-                <figure class="timeline-media">
-                  <img src="./images/piano.jpg" alt="Piano performance">
-                </figure>
-              </div>
-            </div>
+        <p class="p" data-reveal>Today, I've organized my life around this passion. I'm active in hackathons, entrepreneurship clubs and work in VC. Exposure to hundreds of startups has sharpened my judgement. Most ideas are noise, and even fewer successfully execute.</p>
 
-            <div class="timeline-step" data-reveal>
-              <div class="timeline-step-inner">
-                <div class="timeline-marker">college</div>
-                <div class="timeline-content">
-                  <p class="p" data-reveal>
-                    I entered college as a varsity soccer player and spent my first two years competing at a high level.
-                  </p>
-                </div>
-                <figure class="timeline-media">
-                  <img src="./images/soccer.jpeg" alt="Soccer">
-                </figure>
-              </div>
-            </div>
-
-            <div class="timeline-step" data-reveal>
-              <div class="timeline-step-inner">
-                <div class="timeline-marker">ACL</div>
-                <div class="timeline-content">
-                  <p class="p" data-reveal>
-                    A torn ACL abruptly finished that path and created forced downtime. I used it to go all in on AI.
-                  </p>
-                </div>
-                <figure class="timeline-media placeholder">
-                  <div class="placeholder-content">—</div>
-                </figure>
-              </div>
-            </div>
-
-            <div class="timeline-step" data-reveal>
-              <div class="timeline-step-inner">
-                <div class="timeline-marker">build</div>
-                <div class="timeline-content">
-                  <p class="p" data-reveal>
-                    I taught myself how to build AI systems and automations—moving from idea to a working system fast. I shipped: my own AI application, automations for a local startup, automated Reddit engagement, LinkedIn-scraped outreach, and end-to-end pipelines where I owned outcomes.
-                  </p>
-                </div>
-                <figure class="timeline-media">
-                  <img src="./images/research.jpg" alt="Research">
-                </figure>
-              </div>
-            </div>
-
-            <div class="timeline-step" data-reveal>
-              <div class="timeline-step-inner">
-                <div class="timeline-marker">today</div>
-                <div class="timeline-content">
-                  <p class="p" data-reveal>
-                    Today I'm active in hackathons and entrepreneurship clubs and I intern at a venture capital firm. It sharpened my judgment: lots of ideas, few that matter, even fewer that execute. I want to be on the operating side building systems that create measurable outcomes.
-                  </p>
-                </div>
-                <figure class="timeline-media">
-                  <img src="./images/investing.png" alt="Investing">
-                </figure>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <button class="timeline-arrow timeline-arrow-right" aria-label="Next" id="timelineNext">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </button>
+        <p class="p" data-reveal>Through my experience, I believe that growth is no longer a volume game; it's an engineering challenge. The future is programmatic, hyper targeted, personalized outreach. I am focused on being at the forefront of this inevitable future, joining or building high growth teams that invent the next generation of acquisition engines.</p>
       </div>
-
-      <div class="timeline-dots" id="timelineDots"></div>
     </main>
   </div>
 
   <script src="assets/js/reveal.js"></script>
-  <script src="assets/js/journey-timeline.js"></script>
   <script src="script.js"></script>
+</body>
+</html>

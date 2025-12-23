@@ -155,6 +155,95 @@
       margin-top: 24px;
       margin-bottom: 0;
     }
+    
+    /* Yellow highlighter for the future of growth sentence - matching screenshot style */
+    .highlight-yellow {
+      background: rgba(255, 240, 100, 0.35) !important;
+      padding: 0.15em 0.25em !important;
+      border-radius: 3px !important;
+      position: relative !important;
+      display: inline !important;
+      color: inherit !important;
+      text-decoration: none !important;
+      z-index: 0 !important;
+    }
+    
+    /* Italic journey link in nav bracket */
+    .nav.bracket .journey-link {
+      font-style: italic;
+    }
+    
+    /* Simple intro name animation */
+    .intro-hi {
+      font-size: 64px !important;
+      font-weight: 800 !important;
+      letter-spacing: -1.2px !important;
+      line-height: 1.1 !important;
+      max-width: none !important;
+    }
+    
+    .intro-name {
+      display: inline-block !important;
+      position: relative !important;
+      color: var(--fg) !important;
+      animation: introNameReveal 1.5s cubic-bezier(.2,.9,.2,1) forwards !important;
+    }
+    
+    /* Gradient overlay effect */
+    .intro-name::after {
+      content: 'Brody Weinfurtner';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, var(--hl-a), var(--hl-b));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes introNameReveal {
+      0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(30px);
+        filter: blur(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+      }
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+    
+    /* Zoom out animation */
+    .intro-zoom {
+      animation: introZoomOut 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    
+    @keyframes introZoomOut {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(25);
+        visibility: hidden;
+      }
+    }
   </style>
 </head>
 
@@ -178,11 +267,18 @@
       <p class="p" data-reveal>
         I currently work in VC @
         <a class="soft-link" href="https://northcoast.vc/" target="_blank" rel="noreferrer">north coast ventures</a>
-        where I study how companies really grow, not how they pitch it. @ Emory, I study the technology to make growth happen.
+         where I study what makes companies grow. 
+      
+         <p class="p" data-reveal>
+        @ Emory, I study the mix of business and technology to make innovative growth happen.
+      </p>
+      
+      <p class="p" data-reveal>
+        So far, I’ve run diligence on 75+ companies and have built scrapers, automations, growth plays + <a class="soft-link" href="https://brodyw52.github.io/recent.html" target="_blank" rel="noreferrer"> more</a>
       </p>
 
       <p class="p" data-reveal>
-        So far, I’ve built self healing scrapers, deeply personalized email campaigns, social media automations and out of the box growth plays.
+        I believe <span class="highlight-yellow">the future of growth isn't about increasing the volume of marketing slop, it's about better, more targeted, personalized and data-driven engineering</span>.
       </p>
 
       <p class="p" data-reveal>
@@ -190,7 +286,7 @@
       </p>
 
       <p class="p" data-reveal>
-        On the side, I’m a
+        On the side, I'm a
         <a class="soft-link" href="https://www.oxfordcollegeathletics.com/sports/msoc/2024-25/bios/weinfurtner_brody_ewkc?view=career&pos=kickers" target="_blank" rel="noreferrer">athlete</a>,
         <a class="soft-link" href="https://www.youtube.com/watch?v=GLuzmoZb2dg&list=RDGLuzmoZb2dg&start_radio=1" target="_blank" rel="noreferrer">musician</a>,
         and
@@ -198,6 +294,7 @@
       </p>
 
       <div class="nav bracket" data-reveal>
+        <a class="soft-link journey-link" href="journey.html">my journey</a>
         <a class="soft-link" href="https://www.linkedin.com/in/brody-weinfurtner/" target="_blank" rel="noreferrer">LinkedIn</a>
         <a class="soft-link" href="https://github.com/brodyw52" target="_blank" rel="noreferrer">GitHub</a>
         <a class="soft-link" href="https://calendar.app.google/NqCDcPiRZ2DYauXH8" target="_blank" rel="noreferrer">Calendar</a>
@@ -207,7 +304,7 @@
       <div class="rule" data-reveal></div>
 
       <p class="p" data-reveal>
-        Here’s <a class="soft-link" href="recent.html">what i've built recently</a> and <a class="soft-link" href="values.html">my core values</a>.
+        Speficically, here’s: <a class="soft-link" href="recent.html">what i've built recently</a> and <a class="soft-link" href="values.html">my core values</a>.
       </p>
     </main>
   </div>

@@ -6,15 +6,13 @@
     const isIndex = document.body.dataset.page === 'index';
     if (!isIndex) return;
 
-    // show once per tab session
-    if (sessionStorage.getItem('introShown') === '1') return;
-    sessionStorage.setItem('introShown', '1');
-
     const overlay = document.createElement('div');
     overlay.className = 'intro-overlay';
     overlay.innerHTML = `
       <div class="intro-inner">
-        <div class="intro-hi"><span class="soft-link">Hey, I'm Brody — entrepreneur, builder, athlete, creative, musician</span></div>
+        <div class="intro-hi">
+          <span class="intro-name">Brody Weinfurtner</span>
+        </div>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -23,20 +21,14 @@
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    // Initial pop-in animation
-    setTimeout(() => {
-      overlay.querySelector('.intro-hi').style.animation = 'introPop 0.75s cubic-bezier(.2,.9,.2,1) forwards';
-    }, 50);
-
-    // Zoom out after 1.5-2 seconds (randomized between 1500-2000ms)
-    const zoomDelay = 1500 + Math.random() * 500;
+    // Zoom out and reveal website after name is shown
     setTimeout(() => {
       overlay.classList.add('intro-zoom');
       setTimeout(() => {
         overlay.remove();
         document.body.style.overflow = prevOverflow || '';
-      }, 800);
-    }, zoomDelay);
+      }, 1500);
+    }, 2500); // Total: ~4 seconds (1.5s reveal + 1s hold + 1.5s zoom)
   }
 
   // ---- Magnetic cursor hover effect ----
@@ -139,6 +131,63 @@
     });
   }
 
+  // ---- Liquid Glass Effects for Journey Page - EXACT CODE FROM USER ----
+  function initLiquidGlass() {
+    const isJourney = window.location.pathname.includes('journey') || 
+                      document.title.includes('journey');
+    if (!isJourney) return;
+
+    // Get all glass elements - using journey-item as glass-card equivalent
+    const glassElements = document.querySelectorAll('.journey-item, .journey-hover-card');
+    
+    if (!glassElements.length) return;
+    
+    // Add mousemove effect for each glass element - EXACT CODE FROM USER
+    glassElements.forEach(element => {
+      element.addEventListener('mousemove', handleMouseMove);
+      element.addEventListener('mouseleave', handleMouseLeave);
+    });
+    
+    // Handle mouse movement over glass elements - EXACT CODE FROM USER
+    function handleMouseMove(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Update filter turbulence based on mouse position - FIXED: filter is in SVG at document level
+      const filter = document.querySelector('#glass-distortion feDisplacementMap');
+      if (filter) {
+        const scaleX = (x / rect.width) * 100;
+        const scaleY = (y / rect.height) * 100;
+        filter.setAttribute('scale', Math.min(scaleX, scaleY));
+      }
+      
+      // Add highlight effect
+      const specular = this.querySelector('.journey-item-glass-specular, .journey-hover-card-glass-specular');
+      if (specular) {
+        specular.style.background = `radial-gradient(
+          circle at ${x}px ${y}px,
+          rgba(255,255,255,0.15) 0%,
+          rgba(255,255,255,0.05) 30%,
+          rgba(255,255,255,0) 60%
+        )`;
+      }
+    }
+    
+    // Reset effects when mouse leaves - EXACT CODE FROM USER
+    function handleMouseLeave() {
+      const filter = document.querySelector('#glass-distortion feDisplacementMap');
+      if (filter) {
+        filter.setAttribute('scale', '77');
+      }
+      
+      const specular = this.querySelector('.journey-item-glass-specular, .journey-hover-card-glass-specular');
+      if (specular) {
+        specular.style.background = 'none';
+      }
+    }
+  }
+
   // Add floating marker animation
   if (!document.querySelector('#journey-animations')) {
     const style = document.createElement('style');
@@ -162,6 +211,42 @@
     });
   }
 
+  // ---- Make current page link bold in navigation ----
+  function initCurrentPageBold() {
+    const currentPath = window.location.pathname;
+    let currentPage = currentPath.split('/').pop();
+    
+    // Handle index/home page
+    if (!currentPage || currentPage === '' || currentPage === 'index.html') {
+      currentPage = 'index.html';
+    }
+    
+    // Find all nav links
+    const navLinks = document.querySelectorAll('.nav.bracket a.soft-link, .bracket a.soft-link');
+    
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      
+      // Normalize href - remove leading slash and handle index.html
+      let linkPage = href.replace(/^\//, ''); // Remove leading slash
+      if (!linkPage || linkPage === '' || linkPage === '/') {
+        linkPage = 'index.html';
+      }
+      
+      // Also check for "home" link pointing to index
+      if (linkPage === 'index.html' && currentPage === 'index.html') {
+        link.classList.add('current-page');
+        return;
+      }
+      
+      // Check if this link matches the current page
+      if (linkPage === currentPage) {
+        link.classList.add('current-page');
+      }
+    });
+  }
+
   // Initialize on DOM ready
   document.addEventListener('DOMContentLoaded', () => {
     runIntroIfIndex();
@@ -170,5 +255,7 @@
     initParallax();
     initJourneyAnimations();
     initSmoothReveals();
+    initLiquidGlass();
+    initCurrentPageBold();
   });
 })();
